@@ -1,4 +1,5 @@
 <?php
+include 'components.php';
 /**
  *
  */
@@ -6,10 +7,10 @@ class UserBash {
 	private $items;
 	function __construct() {
 		$this -> items = array();
-		$this -> items[] = new TabbedItem('News', NULL);
-		$this -> items[] = new TabbedItem('News2', NULL);
-		$this -> items[] = new TabbedItem('News3', NULL);
-		$this -> items[] = new TabbedItem('News4', NULL);
+		$this -> items[] = new TabbedItem('News', new Component('news'));
+		$this -> items[] = new TabbedItem('News2',  new Component('news2'));
+		$this -> items[] = new TabbedItem('News3',  new Component('news3'));
+		$this -> items[] = new TabbedItem('News4',  new Component('news4'));
 	}
 
 	public function login() {
@@ -30,26 +31,25 @@ class UserBash {
 	}
 
 	public function render() {
+		$contents = array();
 		echo "<a id=\"tabbeditem\" onclick=\"logout()\">Logout</a>";
 		echo "<div id=\"head\">";
-		foreach (($this -> items) as $lalab) {
-			$name = $lalab -> getName();
-			echo "<a id=\"tabbeditem\" onclick=\"to('".$name."')\">" . $name . "</a>";
-		}
-		echo "</div>";
-		echo "<div id=\"content\">";
-		$counter = 0;
+		$first = 1;
 		foreach (($this -> items) as $lalab) {
 			$inst = $lalab -> getInstance();
 			$name = $lalab -> getName();
-			echo "<a id=\"tabbeditem\" name=\"".$name."\" onclick=\"to()\" style=\"display:";
-			if($counter == 0){
-				echo "block";
-			}else{
-				echo "none";
+			echo "<a id=\"tabbeditem\" onclick=\"to('".$name."')\">" . $name . "</a>";
+			$style = 'none';
+			if($first == 1){
+				$style = "block";
+				$first = 0;
 			}
-			echo ";\">" .$inst.render(). "</a>";
-			$counter = 1;
+			$contents[] = "<div id=\"tabbedpane\" name=\"".$name."\" style=\"display:".$style.";\">" .$inst.render(). "</div>";
+		}
+		echo "</div>";
+		echo "<div id=\"content\">";
+		foreach ($contents as $content) {
+			echo $content;
 		}
 		echo "</div>";
 	}
