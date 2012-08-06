@@ -1,0 +1,79 @@
+@CHARSET "UTF-8";
+#barIcon_settings{
+	position: absolute;
+	background: transparent;
+	width: 64px;
+	height: 64px;
+	z-index: 4;
+	bottom: 5px;
+}
+#bash_holder{
+	position: absolute;
+	background: transparent;
+	margin: 1%;
+	width: 98%;
+	height: 98%;
+	z-index: 4;
+}
+#bash{
+	
+	position: absolute;
+	background: transparent;
+	margin: 1%;
+	width: 98%;
+	height: 98%;
+}
+#bash_topbar{
+	background: transparent;
+	width: 100%;
+	height: 40px;
+}
+#bash_content{
+	background: transparent;
+	width: 100%;
+	height: 100%;
+}
+#bash_background{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	-moz-border-radius: 10px; /* Firefox */
+	-webkit-border-radius: 10px; /* Safari, Chrome */
+	-khtml-border-radius: 10px;
+	border-radius: 10px;
+	opacity: 0.8;
+	-moz-opacity: 0.8;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+	filter: alpha(opacity=80);
+	background: rgb(242,146,0);
+	border-style: solid;
+	border-color: black;
+}
+#bash_close{
+	width: 45px;
+	height: 45px;
+	float: left;
+	margin-top:0px;
+}
+#bash_name{
+	margin-left: 50px;
+	background: transparent;
+	height: 100%;
+	margin-top:0px;
+}
+#bash_pane{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+p.infield {
+    position: relative;
+}
+label.infield {
+    cursor: text !important;
+}
+#login form label.infield {
+    color: #AAAAAA;
+    font-size: 1.5em;
+    position: absolute;
+}

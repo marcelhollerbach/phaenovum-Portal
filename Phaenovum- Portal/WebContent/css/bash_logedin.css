@@ -1,0 +1,16 @@
+#head{
+	padding-top: 10px;
+	height: 45px;
+	width: 100%;
+}
+#tabbeditem{
+	border-style: solid;
+	border-color: gray;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+#tabbedcontent{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
