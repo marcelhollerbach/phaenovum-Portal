@@ -1,5 +1,5 @@
 <?php
-include 'components.php';
+include 'Compontents.php';
 /**
  *
  */
@@ -34,22 +34,30 @@ class UserBash {
 		$contents = array();
 		echo "<a id=\"tabbeditem\" onclick=\"logout()\">Logout</a>";
 		echo "<div id=\"head\">";
-		$first = 1;
+		$counter = 0;
 		foreach (($this -> items) as $lalab) {
 			$inst = $lalab -> getInstance();
 			$name = $lalab -> getName();
-			echo "<a id=\"tabbeditem\" onclick=\"to('".$name."')\">" . $name . "</a>";
+			echo "<a id=\"tabbeditem\" onclick=\"to('tabbed".$counter."')\">" . $name . "</a>";
+			$contents[] = $inst;
+			$counter = $counter +1;
+			//$contents[] = "<div id=\"tabbedpane\" name=\"".$name."\" style=\"display:".$style.";\">" .$inst -> render(). "</div>";
+		}
+		echo "</div>";
+		echo "<div id=\"content\">";
+		
+		$first = 1;
+		$counter = 0;
+		foreach ($contents as $content) {
 			$style = 'none';
 			if($first == 1){
 				$style = "block";
 				$first = 0;
 			}
-			$contents[] = "<div id=\"tabbedpane\" name=\"".$name."\" style=\"display:".$style.";\">" .$inst.render(). "</div>";
-		}
-		echo "</div>";
-		echo "<div id=\"content\">";
-		foreach ($contents as $content) {
-			echo $content;
+			echo"<div id=\"tabbedpane\" name=\"tabbed".$counter."\" style=\"display:".$style.";\">";
+			$content -> render();
+			echo "</div>";
+			$counter = $counter +1;
 		}
 		echo "</div>";
 	}
