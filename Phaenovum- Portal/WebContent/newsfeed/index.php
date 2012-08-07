@@ -12,5 +12,11 @@
  echo $Obj->getFormattedText();
  
  $DB = new Database("127.0.0.1","root","server","news");
+ $neuigkeiten = $DB->getNews();
+ echo "<pre>";
+ print_r($neuigkeiten);
+ echo "</pre>";
+ $DB->store($Obj);
+ 
  
 ?>
