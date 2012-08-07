@@ -1,15 +1,15 @@
 <?php
 include 'UserBash.php';
 include '../settings/Settings.php';
+include 'Authorization.php';
 $userbash = new UserBash();
 session_start();
 if (isset($_POST['type']) && $_POST['type'] == "log") {
 	$usr = $_POST['usr'];
 	$pw = $_POST['pw'];
-	if($usr == 'admin'&& Settings::checkAdminPW($pw)){
+	if(Authorization::auth($usr,$pw)){
 		$_SESSION['login'] = TRUE;
 	}else{
-		//TODO ldap-auth
 		echo "-1";
 		exit();
 	}

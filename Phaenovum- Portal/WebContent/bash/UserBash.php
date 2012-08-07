@@ -8,9 +8,9 @@ class UserBash {
 	function __construct() {
 		$this -> items = array();
 		$this -> items[] = new TabbedItem('News', new Component('news'));
-		$this -> items[] = new TabbedItem('News2',  new Component('news2'));
-		$this -> items[] = new TabbedItem('News3',  new Component('news3'));
-		$this -> items[] = new TabbedItem('News4',  new Component('news4'));
+		$this -> items[] = new TabbedItem('News2', new Component('news2'));
+		$this -> items[] = new TabbedItem('News3', new Component('news3'));
+		$this -> items[] = new TabbedItem('News4', new Component('news4'));
 	}
 
 	public function login() {
@@ -25,39 +25,33 @@ class UserBash {
 	}
 
 	public function content() {
-		if (isset($_SESSION['login']) && $_SESSION['login']) {
-			$this -> render();
-		}
-	}
-
-	public function render() {
 		$contents = array();
-		echo "<a id=\"tabbeditem\" onclick=\"logout()\">Logout</a>";
 		echo "<div id=\"head\">";
 		$counter = 0;
 		foreach (($this -> items) as $lalab) {
 			$inst = $lalab -> getInstance();
 			$name = $lalab -> getName();
-			echo "<a id=\"tabbeditem\" onclick=\"to('tabbed".$counter."')\">" . $name . "</a>";
+			echo "<a id=\"tabbeditem\" onclick=\"to('tabbed" . $counter . "')\">" . $name . "</a>";
 			$contents[] = $inst;
-			$counter = $counter +1;
+			$counter = $counter + 1;
 			//$contents[] = "<div id=\"tabbedpane\" name=\"".$name."\" style=\"display:".$style.";\">" .$inst -> render(). "</div>";
 		}
+			echo "<a id=\"tabbeditem\" name=\"a_logout\" onclick=\"logout()\" >Logout</a>";
 		echo "</div>";
 		echo "<div id=\"content\">";
-		
+
 		$first = 1;
 		$counter = 0;
 		foreach ($contents as $content) {
 			$style = 'none';
-			if($first == 1){
+			if ($first == 1) {
 				$style = "block";
 				$first = 0;
 			}
-			echo"<div id=\"tabbedpane\" name=\"tabbed".$counter."\" style=\"display:".$style.";\">";
+			echo "<div id=\"tabbedpane\" name=\"tabbed" . $counter . "\" style=\"display:" . $style . ";\">";
 			$content -> render();
 			echo "</div>";
-			$counter = $counter +1;
+			$counter = $counter + 1;
 		}
 		echo "</div>";
 	}

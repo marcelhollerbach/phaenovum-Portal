@@ -66,14 +66,3 @@
 	width: 100%;
 	height: 100%;
 }
-p.infield {
-    position: relative;
-}
-label.infield {
-    cursor: text !important;
-}
-#login form label.infield {
-    color: #AAAAAA;
-    font-size: 1.5em;
-    position: absolute;
-}

@@ -12,7 +12,6 @@ session_start();
 		<link rel="stylesheet" type="text/css" href="./css/bash.css"/>
 		<link rel="stylesheet" type="text/css" href="./css/bash_logedin.css"/>
 		<script src="./js/bash.js" type="text/javascript"></script>
-		<script src="./js/UserBash.js"type="text/javascript"></script>
 		<script src="./js/sidebar.js" type="text/javascript"></script>
 		<script src="./js/bash_settings.js" type="text/javascript"></script>
 	</head>
