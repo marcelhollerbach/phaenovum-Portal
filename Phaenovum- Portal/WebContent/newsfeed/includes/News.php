@@ -33,7 +33,7 @@
 	 * Funktion zur Rückgabe des authors
 	 */
 	function getAuthor(){
-		return $this->autor;
+		return $this->correctInput($this->autor);
 	}
 	
 	/**
@@ -54,7 +54,7 @@
 	 * Funktion gibt die Überschrift zurück
 	 */
 	function getHeadline(){
-		return $this->headline;
+		return $this->correctInput($this->headline);
 	}
 	
 	
@@ -62,7 +62,8 @@
 	 * Die Funktion gibt nur den Unformatierten messagetext zurück
 	 */
 	function getRawText(){
-		return $this->content;
+		return $this->correctInput($this->content);
+		
 	}
 	
 	/**
@@ -82,6 +83,30 @@
 	 */
 	function setId($_id){
 		$this->id = $_id;
+	}
+	
+	/**
+	 * Diese Funktion ersetzt alle sonderzeichen durch den entsprechenden html code, und smileys
+	 * sind auch dabei :)
+	 */
+	function correctInput($text){
+		//Umlaute, zeilenumbrüche und ähnliches
+		$text = str_replace("Ä", "&Auml;", $text);
+		$text = str_replace("Ö", "&Ouml;", $text);
+		$text = str_replace("Ü", "&Uuml;", $text);
+		$text = str_replace("ä", "&auml;", $text);
+		$text = str_replace("ö", "&ouml;", $text);
+		$text = str_replace("ü", "&uuml;", $text);
+		$text = str_replace("\\\"", "\"", $text);
+		$text = str_replace("\\\'", "\'", $text);
+		$text = str_replace("\\\]", "]", $text);
+		$text = str_replace("\\\[", "[", $text);
+		$text = str_replace("\'", "&prime;", $text);
+		$text = str_replace("\n",'<br>', $text);
+		
+		//Jetzt die Smileys, kommen später
+		//$text = str_replace("<3", '<img src="./images/"', $subject)
+		return $text;
 	}
 	
  }

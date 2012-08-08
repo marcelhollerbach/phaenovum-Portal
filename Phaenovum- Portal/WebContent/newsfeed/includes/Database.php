@@ -67,7 +67,6 @@
 	 */
 	function store($_news){
 		$sql = "INSERT INTO captive_news (author,date,headline,content) VALUES('".$_news->getAuthor()."','".$_news->getDate()."','".$_news->getHeadline()."','".$_news->getRawText()."')";
-		echo $sql;
 		$query = mysql_query($sql);
 		if(!$query){
 			echo mysql_error();
