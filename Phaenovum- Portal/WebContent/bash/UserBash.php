@@ -1,5 +1,6 @@
 <?php
 include 'Compontents.php';
+include '../newsfeed/newsController.php';
 /**
  *
  */
@@ -7,7 +8,7 @@ class UserBash {
 	private $items;
 	function __construct() {
 		$this -> items = array();
-		$this -> items[] = new TabbedItem('News', new Component('news'));
+		$this -> items[] = new TabbedItem('Newsfeed', new newsController());
 		$this -> items[] = new TabbedItem('News2', new Component('news2'));
 		$this -> items[] = new TabbedItem('News3', new Component('news3'));
 		$this -> items[] = new TabbedItem('News4', new Component('news4'));

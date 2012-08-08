@@ -20,13 +20,13 @@
 			$ini = parse_ini_file('./settings.ini');
 			return $ini['mysql-benutzer'];
 		}
-		public static function checkMYSQLpw($pw){
+		public static function getMYSQLPW(){
 			$ini = parse_ini_file('./settings.ini');
-			if($pw == $ini['mysql-passwort']){
-				return TRUE;
-			}else{
-				return FALSE;
-			}
+			return $ini['mysql-passwort'];
+		}
+		public static function getMYSQLDatenbank(){
+			$ini = parse_ini_file('./settings.ini');
+			return $ini['mysql-datenbank'];
 		}
 		public static function checkAdminPW($pw){
 			$ini = parse_ini_file('settings.ini');
