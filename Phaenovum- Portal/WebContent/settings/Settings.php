@@ -22,7 +22,7 @@ class Settings {
 
 	public static function getMYSQLPW() {
 		$ini = parse_ini_file('settings.ini');
-		return $ini['mysql-passwort'];
+		return $ini['mysql-password'];
 	}
 
 	public static function getMYSQLConnection() {

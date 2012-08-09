@@ -8,7 +8,7 @@ if (isset($_POST['type']) && $_POST['type'] == "log") {
 	$usr = $_POST['usr'];
 	$pw = $_POST['pw'];
 	if(Authorization::auth($usr,$pw)){
-		$_SESSION['login'] = TRUE;
+		//Loged in
 	}else{
 		echo "-1";
 		exit();

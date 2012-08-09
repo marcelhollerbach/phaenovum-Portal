@@ -41,10 +41,10 @@
 	-webkit-border-radius: 10px; /* Safari, Chrome */
 	-khtml-border-radius: 10px;
 	border-radius: 10px;
-	opacity: 0.8;
-	-moz-opacity: 0.8;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
-	filter: alpha(opacity=80);
+	opacity: 0.9;
+	-moz-opacity: 0.9;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+	filter: alpha(opacity=90);
 	background: rgb(242,146,0);
 	border-style: solid;
 	border-color: black;

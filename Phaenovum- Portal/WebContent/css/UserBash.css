@@ -14,6 +14,8 @@
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=1 ); /* IE6-8 */
 }
 #tabbeditem {
+	cursor:pointer;
+	cursor:hand;
 	color: white;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -24,6 +26,13 @@
 	height: 100%;
 }
 #login{
+	position: absolute;
+	width: 250px;
+	height: 100px;
+	top: 25%;
+	left: 50%;
+	margin-top: -50px;
+	margin-left: -175px;
 }
 #field{
 	margin: 4px;

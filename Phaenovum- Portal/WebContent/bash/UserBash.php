@@ -19,11 +19,11 @@ class UserBash {
 		echo "<h4> Login:</h4>";
 		echo "<div id=\"field\">";
 		echo "<label id=\"label_usr\" for=\"usr\"> Benutzername </label>";
-		echo "<input onmouseover=\"unvisible('label_usr',this,0)\" onkeydown=\"unvisible('label_usr',this,1)\" onmouseleave=\"visible('label_usr',this)\"id=\"usr\" type=\"text\" name=\"usr\"/> <br>";
+		echo "<input onmouseover=\"unvisible('label_usr',this,0)\" onkeydown=\"unvisible('label_usr',this,1)\" onmouseleave=\"unvisible('label_usr',this,-1)\"id=\"usr\" type=\"text\" name=\"usr\"/> <br>";
 		echo "</div>";
 		echo "<div id=\"field\">";
 		echo "<label id=\"label_pw\" for=\"usr\"> Passwort </label>";
-		echo "<input onmouseover=\"unvisible('label_pw',this,0)\" onkeydown=\"unvisible('label_pw',this,1)\" onmouseleave=\"visible('label_pw',this)\" id=\"pw\"type=\"password\" name=\"pw\"/> <br>";
+		echo "<input onmouseover=\"unvisible('label_pw',this,0)\" onkeydown=\"unvisible('label_pw',this,1)\" onmouseleave=\"unvisible('label_pw',this,-1)\" id=\"pw\"type=\"password\" name=\"pw\"/> <br>";
 		echo "</div>";
 		echo "<input type=\"submit\" onclick=\"login()\" value=\"Login\"/>";
 		echo "</div>";
