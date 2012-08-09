@@ -4,6 +4,7 @@
  */
  require_once("includes/Database.php");
  require_once("includes/News.php");
+ require_once("../settings/Settings.php");
  
  class newsController{
   
@@ -12,7 +13,9 @@
 	 */
    function render(){
    	 //Datenbankverbindung herstellen
-   	 $DB = new Database("127.0.0.1","root","server","news");
+   	 $settings = new Settings();
+	 
+   	 $DB = new Database($settings->getMYSQLServer(),$settings->getMYSQLUser(),"server","news");
 	 //Newsarray clonen und durchlaufen
 	 $newsArray = $DB->getNews();
 	 

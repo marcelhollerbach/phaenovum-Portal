@@ -4,15 +4,10 @@
  * @author Marcel Neidinger
  */
  require_once('News.php');
+ require_once('../settings/Settings.php');
  class Database{
- 	//Die MySQL Serveradresse
- 	private $db_server;
-	//Der MySQL User
-	private $db_user;
-	//Das Passwort des oberen Users
-	private $db_passwort;
-	//Die Datenbank
-	private $db_base;
+	//Die Settings Datei
+	private $settings;
 	//Link Objekt für die Datenbank
 	private $db_link;
 	//DB Select
@@ -23,16 +18,14 @@
 	/**
 	 * Konstruktor, in dem wir die Verbindung zur Datenbank versuchen
 	 */
-	function __construct($_db_server,$_db_user,$_db_passwort,$_db_base){
+	function __construct($_settings){
 		//Alle Variablen setzen
-		$this->db_server   = $_db_server;
-		$this->db_user     = $_db_user;
-		$this->db_passwort = $_db_passwort;
-		$this->db_base     = $_db_base;
+		$this->settings = $_settings;
+		
 		
 		//Mit der Datenbank connecten
-		$this->db_link = mysql_connect($this->db_server,$this->db_user,$this->db_passwort) or die("Konnte keine Verbindung zur Datenbank aufbauen");
-		$db_selected = mysql_select_db($this->db_base,$this->db_link); 
+		$this->db_link = $settings->getMYSQLConnection();
+		$db_selected = mysql_select_db($settings->getMYSQLDatenbank(),$this->db_link); 
 	}
 	
 	/**
