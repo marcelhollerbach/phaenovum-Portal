@@ -19,9 +19,9 @@
 	 //Newsarray clonen und durchlaufen
 	 $newsArray = $DB->getNews();
 	 
-	 foreach($newsArray as $key => $value){
+	foreach($newsArray as $key => $value){
 	 	echo $value->getFormattedText();
-	 }
+	}
    }
  	
  }

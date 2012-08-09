@@ -5,8 +5,10 @@
  //Includes und Variablen
  require_once("includes/News.php");
  require_once("includes/Database.php");
+ require_once('../settings/Settings.php');
  
- $DB = new Database("127.0.0.1","root","server","news");
+ $settings = new Settings();
+ $DB = new Database($settings);
  
  $headline = $_GET['titel'];
  $content = $_GET['text'];
@@ -16,6 +18,6 @@
  //      ersezt werden
  $news = new News("phaenoBot",$today,$content,$headline);
  $DB->store($news);
- echo '<p style="border-style: solid; border-color: green; color: green;">Die News wurde eingetragen</p>';
+ echo '<p style="border-style: solid; border-color: green; color: black; background-color: #7FFA81; text-align: center;">Die News wurde eingetragen</p>';
  include("index.php");
 ?>

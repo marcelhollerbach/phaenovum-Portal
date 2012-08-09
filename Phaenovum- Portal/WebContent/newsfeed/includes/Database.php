@@ -20,12 +20,12 @@
 	 */
 	function __construct($_settings){
 		//Alle Variablen setzen
-		//$this->settings = $_settings;
+		$this->settings = $_settings;
 		
 		
 		//Mit der Datenbank connecten
 		$this->db_link = $_settings->getMYSQLConnection();
-		$db_selected = mysql_select_db($_settings->getMYSQLDatenbank(),$this->db_link); 
+		$db_selected = mysql_select_db($_settings->getMYSQLDatenbank()); 
 	}
 	
 	/**

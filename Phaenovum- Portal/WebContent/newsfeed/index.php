@@ -11,7 +11,7 @@
  $Obj = new newsController();
  $Obj->render();
  //Start: 0:33 Uhr
- $O = new News("Marcel Neidinger",$heute,"Däs währe dunnäääüü \n mal ein zeilenumbruch","Testheadline of the week");
+ //$O = new News("Marcel Neidinger",$heute,"Däs währe dunnäääüü \n mal ein zeilenumbruch","Testheadline of the week");
  
  
 ?>
