@@ -24,6 +24,9 @@
 			$ini = parse_ini_file('./settings.ini');
 			return $ini['mysql-passwort'];
 		}
+		public static function getMYSQLConnection(){
+			return mysql_connect($this->getMYSQLServer(),$this->getMYSQLUser(),$this->getMYSQLPW()) or die("Fehler beim verbinden mit der Datenbank");
+		}
 		public static function getMYSQLDatenbank(){
 			$ini = parse_ini_file('./settings.ini');
 			return $ini['mysql-datenbank'];

@@ -16,9 +16,15 @@ class UserBash {
 
 	public function login() {
 		echo "<div id=\"login\">";
-		echo "<div class=\"overlay\">";
-		echo "<input type=\"textfield\" name=\"usr\"/> <br>";
-		echo "<input type=\"password\" name=\"pw\"/> <br>";
+		echo "<h4> Login:</h4>";
+		echo "<div id=\"field\">";
+		echo "<label id=\"label_usr\" for=\"usr\"> Benutzername </label>";
+		echo "<input onmouseover=\"unvisible('label_usr',this,0)\" onkeydown=\"unvisible('label_usr',this,1)\" onmouseleave=\"visible('label_usr',this)\"id=\"usr\" type=\"text\" name=\"usr\"/> <br>";
+		echo "</div>";
+		echo "<div id=\"field\">";
+		echo "<label id=\"label_pw\" for=\"usr\"> Passwort </label>";
+		echo "<input onmouseover=\"unvisible('label_pw',this,0)\" onkeydown=\"unvisible('label_pw',this,1)\" onmouseleave=\"visible('label_pw',this)\" id=\"pw\"type=\"password\" name=\"pw\"/> <br>";
+		echo "</div>";
 		echo "<input type=\"submit\" onclick=\"login()\" value=\"Login\"/>";
 		echo "</div>";
 		//	echo "<a id=\"login\" onclick=\"login()\">Login</a>";

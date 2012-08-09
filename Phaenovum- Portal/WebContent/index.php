@@ -10,8 +10,9 @@ session_start();
 		<link rel="stylesheet" type="text/css" href="./css/application-style.css" />
 		<link rel="stylesheet" type="text/css" href="./css/icons.css" />
 		<link rel="stylesheet" type="text/css" href="./css/bash.css"/>
-		<link rel="stylesheet" type="text/css" href="./css/bash_logedin.css"/>
+		<link rel="stylesheet" type="text/css" href="./css/UserBash.css"/>
 		<script src="./js/bash.js" type="text/javascript"></script>
+		<script src="./js/UserBash_Login.js" type="text/javascript"></script>
 		<script src="./js/sidebar.js" type="text/javascript"></script>
 		<script src="./js/bash_settings.js" type="text/javascript"></script>
 	</head>
