@@ -15,7 +15,7 @@
    	 //Datenbankverbindung herstellen
    	 $settings = new Settings();
 	 
-   	 $DB = new Database($settings->getMYSQLServer(),$settings->getMYSQLUser(),"server","news");
+   	 $DB = new Database($settings);
 	 //Newsarray clonen und durchlaufen
 	 $newsArray = $DB->getNews();
 	 
