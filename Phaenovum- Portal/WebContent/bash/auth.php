@@ -1,7 +1,7 @@
 <?php
-include 'UserBash.php';
-include '../settings/Settings.php';
-include 'Authorization.php';
+require_once 'UserBash.php';
+require_once '../settings/Settings.php';
+require_once 'Authorization.php';
 $userbash = new UserBash();
 session_start();
 if (isset($_POST['type']) && $_POST['type'] == "log") {
