@@ -19,8 +19,17 @@
 	 //Newsarray clonen und durchlaufen
 	 $newsArray = $DB->getNews();
 	 
-	foreach($newsArray as $key => $value){
+	/*foreach($newsArray as $key => $value){
 	 	echo $value->getFormattedText();
+	}*/
+	//Damit die neusten News(d.h. die mit der höchsten ID) auch oben stehen
+	for($count = count($newsArray);$count >0;$count--){
+		//Sollte ein Eintrag gelöscht worde sein, ist die Idee leer
+		if($newsArray[$count] == NULL){
+			//Do nothing in here
+		}else{
+			echo $newsArray[$count]->getFormattedText();
+		}
 	}
    }
  	
