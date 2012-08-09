@@ -8,6 +8,7 @@ class Authorization {
 		
 	}
 	static function auth($usr,$pw){
+		session_start();
 		//Usergruppen: 
 		//icons Menubar
 		//news_p news-publishment
@@ -17,7 +18,7 @@ class Authorization {
 			//admin logged in
 			$_SESSION['login'] = TRUE;
 			$_SESSION['usr'] = $usr;
-			$_SESSION['permission'] = 'icon&news_p&news_e&irc';
+			$_SESSION['permission'] = 'icons&news_p&news_e&irc';
 			return TRUE;
 		}else{
 			//TODO LDAP- auth
@@ -25,10 +26,18 @@ class Authorization {
 		}
 	}
 	static function getPermissions(){
+		if(isset($_SESSION['permission'])){
 		return $_SESSION['permission'];
+		}else{
+			return null;
+		}
 	}
 	static function getUserName(){
+		if(isset($_SESSION['usr'])){
 		return $_SESSION['usr'];
+		}else{
+			return null;
+		}
 	}
 }
 

@@ -1,5 +1,6 @@
 <?php
 include 'Compontents.php';
+include 'Authorization.php';
 include '../newsfeed/newsController.php';
 /**
  *
@@ -7,14 +8,38 @@ include '../newsfeed/newsController.php';
 class UserBash {
 	private $items;
 	function __construct() {
-		$this -> items = array();
-		$this -> items[] = new TabbedItem('Newsfeed', new newsController());
-		$this -> items[] = new TabbedItem('Newsfeed-einrichtung', new Compoent('News einrichtung'));
-		$this -> items[] = new TabbedItem('IRC', new Component('irc-Chat'));
-		$this -> items[] = new TabbedItem('Icons', new Component('icons'));
-		$this -> items[] = new TabbedItem('News4', new Component('news4'));
+		
 	}
 
+	private function searchInArray($array, $word) {
+		foreach ($array as $part) {
+			if ($part == $word) {
+				return TRUE;
+			}
+		}
+		return FALSE;
+	}
+	private function buildMenu(){
+		//icons Menubar
+		//news_p news-publishment
+		//news_e news-einreichen
+		//irc chat jeder
+		$permissions_string = Authorization::getPermissions();
+		$permissions = explode("&", $permissions_string);
+		$this -> items = array();
+		if ($this -> searchInArray($permissions, 'news_p')) {
+			$this -> items[] = new TabbedItem('Newsfeed', new newsController());
+		}
+		if ($this -> searchInArray($permissions, 'news_e')) {
+			$this -> items[] = new TabbedItem('Newsfeed-einreichung', new Component('News einrichtung'));
+		}
+		if ($this -> searchInArray($permissions, 'irc')) {
+			$this -> items[] = new TabbedItem('IRC', new Component('irc-Chat'));
+		}
+		if ($this -> searchInArray($permissions, 'icons')) {
+			$this -> items[] = new TabbedItem('Icons', new Component('icons'));
+		}
+	}
 	public function login() {
 		echo "<div id=\"login\">";
 		echo "<h4> Login:</h4>";
@@ -33,6 +58,7 @@ class UserBash {
 	}
 
 	public function content() {
+		$this -> buildMenu();
 		$contents = array();
 		echo "<div id=\"head\">";
 		$counter = 0;
@@ -44,7 +70,7 @@ class UserBash {
 			$counter = $counter + 1;
 			//$contents[] = "<div id=\"tabbedpane\" name=\"".$name."\" style=\"display:".$style.";\">" .$inst -> render(). "</div>";
 		}
-			echo "<a id=\"tabbeditem\" name=\"a_logout\" onclick=\"logout()\" >Logout</a>";
+		echo "<a id=\"tabbeditem\" name=\"a_logout\" onclick=\"logout()\" >Logout</a>";
 		echo "</div>";
 		echo "<div id=\"content\">";
 
