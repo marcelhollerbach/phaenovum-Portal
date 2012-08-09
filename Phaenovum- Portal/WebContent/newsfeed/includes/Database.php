@@ -24,8 +24,8 @@
 		
 		
 		//Mit der Datenbank connecten
-		$this->db_link = $settings->getMYSQLConnection();
-		$db_selected = mysql_select_db($settings->getMYSQLDatenbank(),$this->db_link); 
+		$this->db_link = $_settings->getMYSQLConnection();
+		$db_selected = mysql_select_db($_settings->getMYSQLServer(),$this->db_link); 
 	}
 	
 	/**
