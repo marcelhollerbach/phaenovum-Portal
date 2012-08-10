@@ -1,10 +1,25 @@
-#iconlist{
-	list-style: none;
+#icon{
+	
+}
+#toolbar{
+	position: absolute;
+	float: left;
+	height: 30px;
+	width: 200px;
+	left: 0px;
+	bottom: 0px;
+	border-style: solid;
+	border-color: black;
 }
 #leftlist{
+	overflow: auto;
+	position: absolute;
 	float: left;
-	width: 30%;
-	height: 100%;
+	top: 0px;
+	left: 0px;
+	bottom: 30px;
+	
+	width: 200px;
 	border-style: solid;
 	border-color: black;
 }

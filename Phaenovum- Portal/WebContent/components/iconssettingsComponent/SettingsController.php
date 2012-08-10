@@ -21,13 +21,23 @@ class SettingsController {
 	function render() {
 		$this -> readINIFiles();
 		echo "<div id=\"leftlist\">";
-		echo "<ul>";
+		//echo "<div id=\"icons\">";
+		echo "<table>";
+		$counter = 0;
 		foreach ($this -> _icon_settings_files as $icon) {
+			echo "<tr id=\"iconliste\">";
+			echo "<td><input type=\"checkbox\" name=\"Kenntnisse".$counter."\" value=\"HTML\" /></td>";
 			$ini = parse_ini_file('./../icon_settings/' . $icon);
-			echo "<li id=\"iconlist\">" . $ini['name'] . "</li>";
+			echo "<td><a id=\"iconlist\">" . $ini['name'] ."</a></td>";
+			echo "</tr>";
+			$counter = $counter +1;
 		}
-		echo "</ul>";
+		echo "</table>";
 		echo "</div>";
+		echo "<div id=\"toolbar\">";
+		echo "<a onclick=\"createIcon()\">new icon</a>";
+		echo "</div>";
+		//echo "</div>";
 	}
 
 	function write_php_ini($array, $file) {

@@ -7,6 +7,9 @@ class PortalBuilder {
 	private $_ursprung;
 
 	function __construct() {
+		require_once './bash/UserBash.php';
+		require_once './settings/Settings.php';
+		require_once './bash/Authorization.php';
 		$this -> _ursprung = $_SERVER['SERVER_NAME'];
 		$this -> _icon_settings_files = array();
 		$icon_settings_files = array();
@@ -76,11 +79,19 @@ class PortalBuilder {
 	}
 
 	public function barSettings() {
-		echo "<div id=\"barIcon_settings\">
-					<div id=\"doc\">
-						<a href=\"#\" oncontextmenu=\"return false\" onclick=\"showSettingsBash();refreshlogin(1)\"><img src=\"./icon_images/ICONPORTALphaenovum.png\"/></a>
-					</div>
-				</div>";
+		//echo "<div id=\"barIcon_settings\">
+		//			<div id=\"doc\">
+		//				<a href=\"#\" oncontextmenu=\"return false\" onclick=\"showSettingsBash();refreshlogin(1)\"><img src=\"./icon_images/ICONPORTALphaenovum.png\"/></a>
+		//			</div>
+		//		</div>";
+		echo "<div id=\"barIcon_settings\">";
+		echo "<div id=\"doc\">";
+		echo "<form action=\"index.php\" method=\"POST\">";
+		echo "<input type=\"hidden\" name=\"request\" value=\"settings\">";
+		echo "<input type=\"image\" src=\"./icon_images/ICONPORTALphaenovum.png\">";
+		echo "</form>";
+		echo "</div>";
+		echo "</div>";
 
 	}
 
@@ -91,18 +102,19 @@ class PortalBuilder {
 		echo "</div>";
 		//bash
 		echo "<div id=\"bash\">";
-		//topbar
-		//content
 		echo "<div id=\"bash_content\" name=\"bash_content\">";
-		//what ever
-		//echo "<div id=\"bash_pane\" name=\"bash_pane0\" style=\"  display: block;\">"; 
-			
-		//echo "</div>";
-		//echo "<div id=\"bash_pane\" name=\"bash_pane1\" style=\"  display: none;\"> 
-		//<iframe name=\"_bash_output\" src=\"#\">
-		//	
-		//</iframe> </div>";
-		////inhalt
+		//content
+		$userbash = new UserBash();
+		 if (!isset($_SESSION['login']) || !$_SESSION['login']) {
+			//nicht eingeloggt
+			 $userbash -> login();
+		 }else{
+			 if(isset($_POST['application'])){
+				 $userbash -> content($_POST['application']);
+			 }else{
+				 $userbash -> content('none');
+			 }
+		 }
 		echo "</div>";
 		echo "</div>";
 		echo "<div id=\"bash_topbar\">";

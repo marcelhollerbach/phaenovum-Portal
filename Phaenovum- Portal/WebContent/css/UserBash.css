@@ -13,11 +13,8 @@
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=1 ); /* IE6-8 */
 }
 #tabbeditem {
-	cursor:pointer;
-	cursor:hand;
-	color: white;
-	padding-left: 10px;
-	padding-right: 10px;
+	float: left;
+	width: auto;
 }
 #tabbedpane {
 	overflow: auto;

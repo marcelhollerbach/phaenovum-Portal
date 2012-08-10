@@ -2,8 +2,8 @@
 require_once 'Compontents.php';
 require_once 'Authorization.php';
 //require_once '../components/newsfeed/newsController.php';
-require_once '../newsfeed/newsController.php';
-require_once '../components/iconssettingsComponent/SettingsController.php';
+//require_once './newsfeed/newsController.php';
+require_once './components/iconssettingsComponent/SettingsController.php';
 /**
  * Dokumentation: mit refreshBash(); kann man ein neuladen des Bashs erziehlen
  */
@@ -40,7 +40,7 @@ class UserBash {
 			$this -> items[] = new TabbedItem('IRC', new Component('irc-Chat'));
 		}
 		if (Authorization::searchForPermissions('icons')) {
-			$this -> items[] = new TabbedItem('Icons', new SettingsController());
+			$this -> items[] = new TabbedItem('Icons', new Component('irc-Chat'));
 		}
 	}
 
@@ -48,6 +48,8 @@ class UserBash {
 		echo "<div id=\"login\">";
 		echo "<h4> Login:</h4>";
 		echo "<div id=\"field\">";
+		echo "<form action=\"login.php\" method=\"POST\">";
+		echo "<input type=\"hidden\" name=\"request\" value=\"login\">";
 		echo "<label id=\"label_usr\" for=\"usr\"> Benutzername </label>";
 		echo "<input onmouseover=\"unvisible('label_usr',this,0)\" onkeydown=\"unvisible('label_usr',this,1)\" onmouseleave=\"unvisible('label_usr',this,-1)\"id=\"usr\" type=\"text\" name=\"usr\"/> <br>";
 		echo "</div>";
@@ -55,7 +57,16 @@ class UserBash {
 		echo "<label id=\"label_pw\" for=\"usr\"> Passwort </label>";
 		echo "<input onmouseover=\"unvisible('label_pw',this,0)\" onkeydown=\"unvisible('label_pw',this,1)\" onmouseleave=\"unvisible('label_pw',this,-1)\" id=\"pw\"type=\"password\" name=\"pw\"/> <br>";
 		echo "</div>";
-		echo "<input type=\"submit\" onclick=\"login()\" value=\"Login\"/>";
+		echo "<input type=\"submit\" value=\"Login\"/>";
+		echo "</form>";
+		//echo "<label id=\"label_usr\" for=\"usr\"> Benutzername </label>";
+		//echo "<input onmouseover=\"unvisible('label_usr',this,0)\" onkeydown=\"unvisible('label_usr',this,1)\" onmouseleave=\"unvisible('label_usr',this,-1)\"id=\"usr\" type=\"text\" name=\"usr\"/> <br>";
+		//echo "</div>";
+		//echo "<div id=\"field\">";
+		//echo "<label id=\"label_pw\" for=\"usr\"> Passwort </label>";
+		//echo "<input onmouseover=\"unvisible('label_pw',this,0)\" onkeydown=\"unvisible('label_pw',this,1)\" onmouseleave=\"unvisible('label_pw',this,-1)\" id=\"pw\"type=\"password\" name=\"pw\"/> <br>";
+		//echo "</div>";
+		//echo "<input type=\"submit\" onclick=\"login()\" value=\"Login\"/>";
 		echo "</div>";
 		//	echo "<a id=\"login\" onclick=\"login()\">Login</a>";
 
@@ -69,11 +80,22 @@ class UserBash {
 		foreach (($this -> items) as $lalab) {
 			$inst = $lalab -> getInstance();
 			$name = $lalab -> getName();
-			echo "<a id=\"tabbeditem\" onclick=\"refreshbashApplication('" . $name . "')\">" . $name . "</a>";
+			//echo "<a id=\"tabbeditem\" onclick=\"refreshbashApplication('" . $name . "')\">" . $name . "</a>";
+			echo "<div id=\"tabbeditem\">";
+			echo "<form id=\"tabbeditem\" action=\"index.php\" method=\"POST\">";
+			echo "<input type=\"hidden\" name=\"request\" value=\"settings\">";
+			echo "<input type=\"hidden\" name=\"application\" value=\"".$name."\">";
+			echo "<input type=\"submit\" value=\"".$name."\">";
+			echo "</form>";
+			echo "</div>";
 			$contents[] = $inst;
 			$counter = $counter + 1;
 		}
-		echo "<a id=\"tabbeditem\" name=\"a_logout\" onclick=\"logout()\" >Logout</a>";
+		//echo "<a id=\"tabbeditem\" name=\"a_logout\" onclick=\"logout()\" >Logout</a>";
+		echo "<form id=\"tabbeditem\" action=\"login.php\" method=\"POST\">";
+		echo "<input type=\"hidden\" name=\"request\" value=\"logout\">";
+		echo "<input type=\"submit\" value=\"Logout\"\">";
+		echo "</form>";
 		echo "</div>";
 		echo "<div id=\"content\">";
 
