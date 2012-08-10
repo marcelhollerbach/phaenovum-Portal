@@ -1,7 +1,8 @@
 <?php
-include 'Compontents.php';
-include 'Authorization.php';
-include '../newsfeed/newsController.php';
+require_once 'Compontents.php';
+require_once 'Authorization.php';
+require_once '../newsfeed/newsController.php';
+require_once '../IconsSettingsComponent/SettingsController.php';
 /**
  *
  */
@@ -37,7 +38,7 @@ class UserBash {
 			$this -> items[] = new TabbedItem('IRC', new Component('irc-Chat'));
 		}
 		if ($this -> searchInArray($permissions, 'icons')) {
-			$this -> items[] = new TabbedItem('Icons', new Component('icons'));
+			$this -> items[] = new TabbedItem('Icons', new SettingsController());
 		}
 	}
 	public function login() {
