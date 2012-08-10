@@ -1,5 +1,4 @@
 #head {
-	padding-top: 10px;
 	height: 20px;
 	width: 90%;
 	padding-left: 10%;
@@ -21,6 +20,7 @@
 	padding-right: 10px;
 }
 #tabbedpane {
+	overflow: auto;
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -33,6 +33,10 @@
 	left: 50%;
 	margin-top: -50px;
 	margin-left: -175px;
+}
+#content{
+	position: absolute;
+	top:30px; left:0; right:0; bottom:0;
 }
 #field{
 	margin: 4px;

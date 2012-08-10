@@ -1,3 +1,10 @@
-#asdfasdfasdf{
-	border: none;
+#iconlist{
+	list-style: none;
+}
+#leftlist{
+	float: left;
+	width: 30%;
+	height: 100%;
+	border-style: solid;
+	border-color: black;
 }

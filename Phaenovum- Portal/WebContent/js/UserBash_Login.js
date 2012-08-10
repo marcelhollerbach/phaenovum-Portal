@@ -18,13 +18,13 @@ function unvisible(id, root, stufe) {
 	}
 }
 
-function to(id) {
-	if ($(visible) == undefined) {
-		$('tabbed0').style.display = 'none';
-		$(id).style.display = 'block';
-	} else {
-		$(visible).style.display = 'none';
-		$(id).style.display = 'block';
-	}
-	visible = id;
-}
+// function to(id) {
+// if ($(visible) == undefined) {
+// $('tabbed0').style.display = 'none';
+// $(id).style.display = 'block';
+// } else {
+// $(visible).style.display = 'none';
+// $(id).style.display = 'block';
+// }
+// visible = id;
+// }

@@ -1,15 +1,16 @@
 <?php
 require_once 'Compontents.php';
 require_once 'Authorization.php';
+//require_once '../components/newsfeed/newsController.php';
 require_once '../newsfeed/newsController.php';
-require_once '../IconsSettingsComponent/SettingsController.php';
+require_once '../components/iconssettingsComponent/SettingsController.php';
 /**
  * Dokumentation: mit refreshBash(); kann man ein neuladen des Bashs erziehlen
  */
 class UserBash {
 	private $items;
 	function __construct() {
-		
+
 	}
 
 	private function searchInArray($array, $word) {
@@ -20,27 +21,29 @@ class UserBash {
 		}
 		return FALSE;
 	}
-	private function buildMenu(){
+
+	private function buildMenu() {
 		//icons Menubar
 		//news_p news-publishment
 		//news_e news-einreichen
 		//irc chat jeder
-		$permissions_string = Authorization::getPermissions();
-		$permissions = explode("&", $permissions_string);
+		//$permissions_string = Authorization::getPermissions();
+		//$permissions = explode("&", $permissions_string);
 		$this -> items = array();
-		if ($this -> searchInArray($permissions, 'news_p')) {
+		if (Authorization::searchForPermissions('news_p')) {
 			$this -> items[] = new TabbedItem('Newsfeed', new newsController());
 		}
-		if ($this -> searchInArray($permissions, 'news_e')) {
+		if (Authorization::searchForPermissions('news_e')) {
 			$this -> items[] = new TabbedItem('Newsfeed-einreichung', new Component('News einrichtung'));
 		}
-		if ($this -> searchInArray($permissions, 'irc')) {
+		if (Authorization::searchForPermissions('irc')) {
 			$this -> items[] = new TabbedItem('IRC', new Component('irc-Chat'));
 		}
-		if ($this -> searchInArray($permissions, 'icons')) {
+		if (Authorization::searchForPermissions('icons')) {
 			$this -> items[] = new TabbedItem('Icons', new SettingsController());
 		}
 	}
+
 	public function login() {
 		echo "<div id=\"login\">";
 		echo "<h4> Login:</h4>";
@@ -66,7 +69,7 @@ class UserBash {
 		foreach (($this -> items) as $lalab) {
 			$inst = $lalab -> getInstance();
 			$name = $lalab -> getName();
-			echo "<a id=\"tabbeditem\" onclick=\"refreshbashApplication('".$name."')\">" . $name . "</a>";
+			echo "<a id=\"tabbeditem\" onclick=\"refreshbashApplication('" . $name . "')\">" . $name . "</a>";
 			$contents[] = $inst;
 			$counter = $counter + 1;
 		}
@@ -74,24 +77,23 @@ class UserBash {
 		echo "</div>";
 		echo "<div id=\"content\">";
 
-
-		if($request == 'none'){
+		if ($request == 'none') {
 			$application = ($this -> items);
 			$content = $application[0] -> getInstance();
 			$name = $application[0] -> getName();
 			echo "<div id=\"tabbedpane\" name=\"tabbed" . $counter . "\" >";
 			$content -> render();
 			echo "</div>";
-		}else{
-		foreach (($this -> items) as $application) {
-			$content = $application -> getInstance();
-			$name = $application -> getName();
-			if($name == $request){
-				echo "<div id=\"tabbedpane\" name=\"tabbed" . $counter . "\">";
-			 	$content -> render();
-			 	echo "</div>";
+		} else {
+			foreach (($this -> items) as $application) {
+				$content = $application -> getInstance();
+				$name = $application -> getName();
+				if ($name == $request) {
+					echo "<div id=\"tabbedpane\" name=\"tabbed" . $counter . "\">";
+					$content -> render();
+					echo "</div>";
+				}
 			}
-		}
 		}
 		echo "</div>";
 	}

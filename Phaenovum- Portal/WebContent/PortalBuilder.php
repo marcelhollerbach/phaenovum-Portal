@@ -13,8 +13,10 @@ class PortalBuilder {
 		if (is_dir('./icon_settings/')) {
 			if ($dir = opendir('./icon_settings/')) {
 				while (($file = readdir($dir)) !== FALSE) {
-					if ($file != '..' && $file != '.') {
-						$icon_settings_files[] = $file;
+					if ($file != '..' && $file != '.'&&$file != 'default.ini') {
+						if (is_file('./icon_settings/'.$file)) {
+							$icon_settings_files[] = $file;
+						}
 					}
 				}
 				closedir($dir);
@@ -67,7 +69,7 @@ class PortalBuilder {
 		echo "</div>";
 		echo "<div id=\"context_menu_content\" >";
 		echo "<a href=\"#\" onclick=\"pop('" . $link . "')\" oncontextmenu=\"return false;\">Extern öffnen</a><br>";
-		echo "<a href=\"#\" onclick=\"showSettingsBash('" . $link . "')\" oncontextmenu=\"return false\">Im Bash öffnen</a>";
+		echo "<a href=\"" . $link . "\" target=\"output\"  oncontextmenu=\"contextOut(" . $id . "); return false\">normal öffnen</a>";
 		echo "</div>";
 		echo "</div>";
 		echo "</div>";
@@ -76,7 +78,7 @@ class PortalBuilder {
 	public function barSettings() {
 		echo "<div id=\"barIcon_settings\">
 					<div id=\"doc\">
-						<a href=\"#\" oncontextmenu=\"return false\" onclick=\"showSettingsBash('settings');refreshlogin(1)\"><img src=\"./icon_images/ICONPORTALphaenovum.png\"/></a>
+						<a href=\"#\" oncontextmenu=\"return false\" onclick=\"showSettingsBash();refreshlogin(1)\"><img src=\"./icon_images/ICONPORTALphaenovum.png\"/></a>
 					</div>
 				</div>";
 
@@ -90,26 +92,27 @@ class PortalBuilder {
 		//bash
 		echo "<div id=\"bash\">";
 		//topbar
+		//content
+		echo "<div id=\"bash_content\" name=\"bash_content\">";
+		//what ever
+		//echo "<div id=\"bash_pane\" name=\"bash_pane0\" style=\"  display: block;\">"; 
+			
+		//echo "</div>";
+		//echo "<div id=\"bash_pane\" name=\"bash_pane1\" style=\"  display: none;\"> 
+		//<iframe name=\"_bash_output\" src=\"#\">
+		//	
+		//</iframe> </div>";
+		////inhalt
+		echo "</div>";
+		echo "</div>";
 		echo "<div id=\"bash_topbar\">";
 		echo "<div id=\"bash_close\">";
 		echo "<a onclick=\"hideSettingsBash()\"><img src=\"./icons/close_button.png\"/></a>";
 		echo "</div>";
 		echo "<div id=\"bash_name\"><h4>Phaenovum- Bash</h4></div>";
 		echo "</div>";
-		//content
-		echo "<div id=\"bash_content\">";
-		//what ever
-		echo "<div id=\"bash_pane\" name=\"bash_pane0\" style=\"  display: block;\">"; 
-			
 		echo "</div>";
-		echo "<div id=\"bash_pane\" name=\"bash_pane1\" style=\"  display: none;\"> 
-		<iframe name=\"_bash_output\" src=\"#\">
-			
-		</iframe> </div>";
-		//inhalt
-		echo "</div>";
-		echo "</div>";
-		echo "</div>";
+		
 	}
 
 }

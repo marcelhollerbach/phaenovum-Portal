@@ -32,6 +32,19 @@ class Authorization {
 			return null;
 		}
 	}
+	static function searchForPermissions($searchedpermission){
+		$permission = self::getPermissions();
+		$permissions = explode("&", $permission);
+		return self::searchInArray($permissions,$searchedpermission);
+	}
+	private static function searchInArray($array, $word) {
+		foreach ($array as $part) {
+			if ($part == $word) {
+				return TRUE;
+			}
+		}
+		return FALSE;
+	}
 	static function getUserName(){
 		if(isset($_SESSION['usr'])){
 		return $_SESSION['usr'];

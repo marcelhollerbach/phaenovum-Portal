@@ -12,26 +12,26 @@
 	background: transparent;
 	margin: 1%;
 	width: 98%;
-	height: 98%;
+	height: 96%;
 	z-index: 4;
 }
 #bash{
-	
 	position: absolute;
+	height: 100%;
+	width: 100%;
 	background: transparent;
-	margin: 1%;
-	width: 98%;
-	height: 98%;
 }
 #bash_topbar{
+	position:absolute;
 	background: transparent;
 	width: 100%;
 	height: 40px;
 }
 #bash_content{
+	margin-top: 40px;
+	position: absolute;
+	top:5px; left:5px; right:5px; bottom:5px;
 	background: transparent;
-	width: 100%;
-	height: 100%;
 }
 #bash_background{
 	position: absolute;
@@ -56,13 +56,13 @@
 	margin-top:0px;
 }
 #bash_name{
-	margin-left: 50px;
+	position:absolute;
+	left: 40px;
 	background: transparent;
 	height: 100%;
-	margin-top:0px;
 }
 #bash_pane{
 	position: absolute;
 	width: 100%;
-	height: 100%;
+	height: auto;
 }

@@ -1,4 +1,4 @@
-var _application
+var _application = 'none';
 
 
 function $(id) {
@@ -31,7 +31,7 @@ function login() {
 		if (http.readyState == 4 && http.status == 200) {
 			refreshlogin(http.responseText);
 		} else if (http.readyState != 4) {
-			$('bash_pane0').innerHTML = 'Seite wird geladen ...';
+			$('bash_content').innerHTML = 'Seite wird geladen ...';
 		}
 	};
 	http.send(params);
@@ -58,19 +58,19 @@ function logout() {
 	http.onreadystatechange = function() {// Call a function when the state
 		// changes.
 		if (http.readyState == 4 && http.status == 200) {
-			$('bash_pane0').innerHTML = http.responseText;
+			$('bash_content').innerHTML = http.responseText;
 			refreshlogin(1);
 		} else if (http.readyState != 4) {
-			$('bash_pane0').innerHTML = 'Seite wird geladen ...';
+			$('bash_content').innerHTML = 'Seite wird geladen ...';
 		}
 	};
 	http.send(params);
 }
 function refreshlogin(key) {
 	if (key != -1) {
-		refreshbashApplication('none');
+		refreshbash();
 	} else {
-		$('bash_pane0').innerHTML = 'Fehler beim login <a onclick="refreshlogin(1)">neuer versuch</a>';
+		$('bash_content').innerHTML = 'Fehler beim login <a onclick="refreshlogin(1)">neuer versuch</a>';
 	}
 }
 function refreshbashApplication(application){
@@ -99,9 +99,9 @@ function refreshbash() {
 	http.onreadystatechange = function() {// Call a function when the state
 		// changes.
 		if (http.readyState == 4 && http.status == 200) {
-			$('bash_pane0').innerHTML = http.responseText;
+			$('bash_content').innerHTML = http.responseText;
 		} else if (http.readyState != 4) {
-			$('bash_pane0').innerHTML = 'Seite wird geladen ...';
+			$('bash_content').innerHTML = 'Seite wird geladen ...';
 		}
 	};
 	http.send(params);
