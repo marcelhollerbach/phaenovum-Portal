@@ -4,9 +4,6 @@ require_once 'Authorization.php';
 //require_once '../components/newsfeed/newsController.php';
 //require_once './newsfeed/newsController.php';
 require_once './components/iconssettingsComponent/SettingsController.php';
-/**
- * Dokumentation: mit refreshBash(); kann man ein neuladen des Bashs erziehlen
- */
 class UserBash {
 	private $items;
 	function __construct() {
@@ -31,7 +28,7 @@ class UserBash {
 		//$permissions = explode("&", $permissions_string);
 		$this -> items = array();
 		if (Authorization::searchForPermissions('news_p')) {
-			$this -> items[] = new TabbedItem('Newsfeed', new newsController());
+			$this -> items[] = new TabbedItem('Newsfeed', new Component('News asdf'));
 		}
 		if (Authorization::searchForPermissions('news_e')) {
 			$this -> items[] = new TabbedItem('Newsfeed-einreichung', new Component('News einrichtung'));
@@ -40,7 +37,7 @@ class UserBash {
 			$this -> items[] = new TabbedItem('IRC', new Component('irc-Chat'));
 		}
 		if (Authorization::searchForPermissions('icons')) {
-			$this -> items[] = new TabbedItem('Icons', new Component('irc-Chat'));
+			$this -> items[] = new TabbedItem('Icons', new SettingsController());
 		}
 	}
 

@@ -3,11 +3,11 @@ class SettingsController {
 	private $_icon_settings_files;
 	private function readINIFiles() {
 		$icon_settings_files = array();
-		if (is_dir('./../icon_settings/')) {
-			if ($dir = opendir('./../icon_settings/')) {
+		if (is_dir('./icon_settings/')) {
+			if ($dir = opendir('./icon_settings/')) {
 				while (($file = readdir($dir)) !== FALSE) {
 					if ($file != '..' && $file != '.' && $file != 'default.ini') {
-						if (is_file('./../icon_settings/' . $file)) {
+						if (is_file('./icon_settings/' . $file)) {
 							$icon_settings_files[] = $file;
 						}
 					}
@@ -27,7 +27,7 @@ class SettingsController {
 		foreach ($this -> _icon_settings_files as $icon) {
 			echo "<tr id=\"iconliste\">";
 			echo "<td><input type=\"checkbox\" name=\"Kenntnisse".$counter."\" value=\"HTML\" /></td>";
-			$ini = parse_ini_file('./../icon_settings/' . $icon);
+			$ini = parse_ini_file('./icon_settings/' . $icon);
 			echo "<td><a id=\"iconlist\">" . $ini['name'] ."</a></td>";
 			echo "</tr>";
 			$counter = $counter +1;
@@ -35,7 +35,7 @@ class SettingsController {
 		echo "</table>";
 		echo "</div>";
 		echo "<div id=\"toolbar\">";
-		echo "<a onclick=\"createIcon()\">new icon</a>";
+		echo "<a onclick=\"\">new icon</a>";
 		echo "</div>";
 		//echo "</div>";
 	}
