@@ -4,7 +4,7 @@ require_once 'Authorization.php';
 require_once '../newsfeed/newsController.php';
 require_once '../IconsSettingsComponent/SettingsController.php';
 /**
- *
+ * Dokumentation: mit refreshBash(); kann man ein neuladen des Bashs erziehlen
  */
 class UserBash {
 	private $items;
@@ -58,7 +58,7 @@ class UserBash {
 
 	}
 
-	public function content() {
+	public function content($request) {
 		$this -> buildMenu();
 		$contents = array();
 		echo "<div id=\"head\">";
@@ -66,27 +66,32 @@ class UserBash {
 		foreach (($this -> items) as $lalab) {
 			$inst = $lalab -> getInstance();
 			$name = $lalab -> getName();
-			echo "<a id=\"tabbeditem\" onclick=\"to('tabbed" . $counter . "')\">" . $name . "</a>";
+			echo "<a id=\"tabbeditem\" onclick=\"refreshbashApplication('".$name."')\">" . $name . "</a>";
 			$contents[] = $inst;
 			$counter = $counter + 1;
-			//$contents[] = "<div id=\"tabbedpane\" name=\"".$name."\" style=\"display:".$style.";\">" .$inst -> render(). "</div>";
 		}
 		echo "<a id=\"tabbeditem\" name=\"a_logout\" onclick=\"logout()\" >Logout</a>";
 		echo "</div>";
 		echo "<div id=\"content\">";
 
-		$first = 1;
-		$counter = 0;
-		foreach ($contents as $content) {
-			$style = 'none';
-			if ($first == 1) {
-				$style = "block";
-				$first = 0;
-			}
-			echo "<div id=\"tabbedpane\" name=\"tabbed" . $counter . "\" style=\"display:" . $style . ";\">";
+
+		if($request == 'none'){
+			$application = ($this -> items);
+			$content = $application[0] -> getInstance();
+			$name = $application[0] -> getName();
+			echo "<div id=\"tabbedpane\" name=\"tabbed" . $counter . "\" >";
 			$content -> render();
 			echo "</div>";
-			$counter = $counter + 1;
+		}else{
+		foreach (($this -> items) as $application) {
+			$content = $application -> getInstance();
+			$name = $application -> getName();
+			if($name == $request){
+				echo "<div id=\"tabbedpane\" name=\"tabbed" . $counter . "\">";
+			 	$content -> render();
+			 	echo "</div>";
+			}
+		}
 		}
 		echo "</div>";
 	}

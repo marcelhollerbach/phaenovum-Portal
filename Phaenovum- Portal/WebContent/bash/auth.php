@@ -17,14 +17,19 @@ if (isset($_POST['type']) && $_POST['type'] == "log") {
 
 } else if (isset($_POST['type']) && $_POST['type'] == "logout") {
 	session_destroy();
-} else {
-
+} else if (isset($_POST['type']) && $_POST['type'] == "request") {
 	if (!isset($_SESSION['login']) || !$_SESSION['login']) {
 		//nicht eingeloggt
 		$userbash -> login();
-	} else {
-		$userbash -> content();
-
+	}else{
+		if(isset($_POST['application'])){
+			$userbash -> content($_POST['application']);
+		}
+	}
+} else{
+	if (!isset($_SESSION['login']) || !$_SESSION['login']) {
+		//nicht eingeloggt
+		$userbash -> login();
 	}
 }
 ?>
