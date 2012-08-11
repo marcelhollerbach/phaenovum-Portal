@@ -41,9 +41,13 @@ class UserBash {
 		}
 	}
 
-	public function login() {
+	public function login($succes) {
 		echo "<div id=\"login\">";
-		echo "<h4> Login:</h4>";
+		if($succes == 'failed'){
+			echo "<h4> Login Fehlgeschlafen, bitte Probieren Sie es erneut </h4>";
+		}else{
+			echo "<h4> Login:</h4>";
+		}
 		echo "<div id=\"field\">";
 		echo "<form action=\"login.php\" method=\"POST\">";
 		echo "<input type=\"hidden\" name=\"request\" value=\"login\">";

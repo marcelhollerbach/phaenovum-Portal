@@ -107,7 +107,12 @@ class PortalBuilder {
 		$userbash = new UserBash();
 		 if (!isset($_SESSION['login']) || !$_SESSION['login']) {
 			//nicht eingeloggt
-			 $userbash -> login();
+			if(isset($_POST['loginsucces'])){
+				echo $_POST['loginsucces'];
+				 $userbash -> login($_POST['loginsucces']);
+			}else{
+				 $userbash -> login('none');
+			}
 		 }else{
 			 if(isset($_POST['application'])){
 				 $userbash -> content($_POST['application']);
