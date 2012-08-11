@@ -1,0 +1,60 @@
+#site{
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+}
+#titel{
+	margin-left: 2%;
+	line-height: 180%;
+	color: #E0E0E0;
+	height: 30px;
+	-webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border-color: black;
+    font-family: Times;
+    font-size:1.5em;
+}
+#titel:hover{
+	-moz-box-shadow: inset 2px 2px 5px #E0E0E0;
+    -webkit-box-shadow: inset 2px 2px 5px #E0E0E0;
+    box-shadow: inset 2px 2px 5px #E0E0E0;
+}
+#titel:focus{
+	-moz-box-shadow: inset 2px 2px 5px #E0E0E0;
+    -webkit-box-shadow: inset 2px 2px 5px #E0E0E0;
+    box-shadow: inset 2px 2px 5px #E0E0E0;
+    color: #000000;
+}
+
+#text{
+	margin-left: 2%;
+	color: #E0E0E0;
+	#Runde ecken
+	-webkit-border-radius: 7px;
+    -khtml-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+    border-color: black;
+    font-family: Times
+}
+
+#text:focus{
+	color: #000000;
+}
+#menubar{
+	margin-top: 10px;
+	padding-left:2%;
+	height: 5%;
+}
+
+.subButton{
+	height: 5%;
+	-webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    font-family: Times;
+	
+}
