@@ -28,7 +28,7 @@ class UserBash {
 		//$permissions = explode("&", $permissions_string);
 		$this -> items = array();
 		if (Authorization::searchForPermissions('news_p')) {
-			$this -> items[] = new TabbedItem('Newsfeed', new Component('News asdf'));
+			$this -> items[] = new TabbedItem('Newsfeed', new newsfeedController());
 		}
 		if (Authorization::searchForPermissions('news_e')) {
 			$this -> items[] = new TabbedItem('Newsfeed-einreichung', new Component('News einrichtung'));
