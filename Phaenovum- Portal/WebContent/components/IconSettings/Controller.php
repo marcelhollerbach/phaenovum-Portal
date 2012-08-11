@@ -1,5 +1,5 @@
 <?php
-class SettingsController {
+class IconSettingsController {
 	private $_icon_settings_files;
 	private function readINIFiles() {
 		$icon_settings_files = array();
@@ -35,7 +35,10 @@ class SettingsController {
 		echo "</table>";
 		echo "</div>";
 		echo "<div id=\"toolbar\">";
-		echo "<a onclick=\"\">new icon</a>";
+		echo "<form name=\"newIcon\" action=\"\">";
+		echo "<input type=\"hidden\" name=\"task\" value=\"newIcon\">";
+		echo "<input type=\"submit\" value=\"newIcon\">";
+		echo "</form>";
 		echo "</div>";
 		//echo "</div>";
 	}
@@ -52,6 +55,5 @@ class SettingsController {
 		}
 		safefilerewrite($file, implode("\r\n", $res));
 	}
-
 }
 ?>

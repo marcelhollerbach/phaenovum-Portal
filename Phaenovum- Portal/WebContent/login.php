@@ -26,5 +26,5 @@ if (isset($_POST['request']) && $_POST['request'] == "login") {
 }else if(isset($_POST['request']) && $_POST['request'] == "logout"){
 	session_destroy();
 }
-forwarding::routeBack(TRUE);
+forwarding::routeBack(TRUE,NULL);
 ?>

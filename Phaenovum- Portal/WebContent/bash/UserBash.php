@@ -1,9 +1,9 @@
 <?php
-require_once 'Compontents.php';
-require_once 'Authorization.php';
+//require_once 'Compontents.php';
+//require_once 'Authorization.php';
 //require_once '../components/newsfeed/newsController.php';
 //require_once './newsfeed/newsController.php';
-require_once './components/iconssettingsComponent/SettingsController.php';
+//require_once './components/iconssettingsComponent/SettingsController.php';
 class UserBash {
 	private $items;
 	function __construct() {
@@ -37,7 +37,7 @@ class UserBash {
 			$this -> items[] = new TabbedItem('IRC', new Component('irc-Chat'));
 		}
 		if (Authorization::searchForPermissions('icons')) {
-			$this -> items[] = new TabbedItem('Icons', new SettingsController());
+			$this -> items[] = new TabbedItem('Icons', new IconSettingsController());
 		}
 	}
 

@@ -9,6 +9,10 @@ class Settings {
 		$ini = parse_ini_file('settings.ini');
 		return $ini['irc-server'];
 	}
+	public static function getHostverzeichniss() {
+		$ini = parse_ini_file('settings.ini');
+		return $ini['host-verzeichniss'];
+	}
 
 	public static function getMYSQLServer() {
 		$ini = parse_ini_file('settings.ini');
