@@ -4,7 +4,6 @@
  * @author Marcel Neidinger
  */
  require_once('News.php');
- //require_once('../settings/Settings.php');
  class Database{
 	//Die Settings Datei
 	private $settings;
