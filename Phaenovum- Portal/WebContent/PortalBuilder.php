@@ -62,7 +62,7 @@ class PortalBuilder {
 		if ($popup == 1) {
 			echo "<a href=\"#\" onclick=\"pop('" . $link . "')\" oncontextmenu=\"return false;\">";
 		} else {
-			echo "<a href=\"" . $link . "\" target=\"output\"  oncontextmenu=\"contextOut(" . $id . "); return false\">";
+			echo "<a href=\"" . $link . "\" onclick=\"setSite('" . $link . "')\" target=\"output\"  oncontextmenu=\"contextOut(" . $id . "); return false\">";
 		}
 		echo "<img src=\"./icon_images/" . $icon . "\" title=\"" . $name . "\" /></a>";
 		echo "</div>";
@@ -86,8 +86,9 @@ class PortalBuilder {
 		//		</div>";
 		echo "<div id=\"barIcon_settings\">";
 		echo "<div id=\"doc\">";
-		echo "<form action=\"index.php\" method=\"POST\">";
+		echo "<form name=\"setting\" action=\"index.php\" method=\"POST\">";
 		echo "<input type=\"hidden\" name=\"request\" value=\"settings\">";
+		echo "<input type=\"hidden\" name=\"site\" value=\"\">";
 		echo "<input type=\"image\" src=\"./icon_images/ICONPORTALphaenovum.png\">";
 		echo "</form>";
 		echo "</div>";

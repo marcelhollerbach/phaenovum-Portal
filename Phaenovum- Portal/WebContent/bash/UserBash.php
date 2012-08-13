@@ -7,7 +7,7 @@
 class UserBash {
 	private $items;
 	function __construct() {
-
+		
 	}
 
 	private function searchInArray($array, $word) {
@@ -26,9 +26,9 @@ class UserBash {
 		//irc chat jeder
 		//$permissions_string = Authorization::getPermissions();
 		//$permissions = explode("&", $permissions_string);
-		$this -> items = array();
+		$this -> items = array();	
 		if (Authorization::searchForPermissions('news_p')) {
-			$this -> items[] = new TabbedItem('Newsfeed', new newsfeedController());
+			$this -> items[] = new TabbedItem('newsfeed', ComponentController::getComponent('newsfeed'));
 		}
 		if (Authorization::searchForPermissions('news_e')) {
 			$this -> items[] = new TabbedItem('Newsfeed-einreichung', new Component('News einrichtung'));
@@ -37,7 +37,7 @@ class UserBash {
 			$this -> items[] = new TabbedItem('IRC', new Component('irc-Chat'));
 		}
 		if (Authorization::searchForPermissions('icons')) {
-			$this -> items[] = new TabbedItem('Icons', new IconSettingsController());
+			$this -> items[] = new TabbedItem('IconSettings', ComponentController::getComponent('IconSettings'));
 		}
 	}
 
@@ -60,16 +60,7 @@ class UserBash {
 		echo "</div>";
 		echo "<input type=\"submit\" value=\"Login\"/>";
 		echo "</form>";
-		//echo "<label id=\"label_usr\" for=\"usr\"> Benutzername </label>";
-		//echo "<input onmouseover=\"unvisible('label_usr',this,0)\" onkeydown=\"unvisible('label_usr',this,1)\" onmouseleave=\"unvisible('label_usr',this,-1)\"id=\"usr\" type=\"text\" name=\"usr\"/> <br>";
-		//echo "</div>";
-		//echo "<div id=\"field\">";
-		//echo "<label id=\"label_pw\" for=\"usr\"> Passwort </label>";
-		//echo "<input onmouseover=\"unvisible('label_pw',this,0)\" onkeydown=\"unvisible('label_pw',this,1)\" onmouseleave=\"unvisible('label_pw',this,-1)\" id=\"pw\"type=\"password\" name=\"pw\"/> <br>";
-		//echo "</div>";
-		//echo "<input type=\"submit\" onclick=\"login()\" value=\"Login\"/>";
 		echo "</div>";
-		//	echo "<a id=\"login\" onclick=\"login()\">Login</a>";
 
 	}
 

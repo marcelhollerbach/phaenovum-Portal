@@ -1,5 +1,6 @@
 <?php
 class Settings {
+	public static $connection;
 	public static function getLDAPServer() {
 		$ini = parse_ini_file('settings.ini');
 		return $ini['ldap-server'];
@@ -30,7 +31,10 @@ class Settings {
 	}
 
 	public static function getMYSQLConnection() {
-		return mysql_connect(self::getMYSQLServer(), self::getMYSQLUser(), self::getMYSQLPW()) or die("Fehler beim verbinden mit der Datenbank");
+		if(self::$connection == NULL){
+			self::$connection = mysql_connect(self::getMYSQLServer(), self::getMYSQLUser(), self::getMYSQLPW()) or die("Fehler beim verbinden mit der Datenbank");
+		}
+		return self::$connection;
 	}
 
 	public static function getMYSQLDatenbank() {

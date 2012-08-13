@@ -23,3 +23,12 @@
 	border-style: solid;
 	border-color: black;
 }
+#editor{
+	position: absolute;
+	top: 0px;
+	left: 220px;
+	right: 0px;
+	bottom: 0%;
+	overflow: auto;
+	float: left;
+}
