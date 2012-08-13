@@ -127,7 +127,7 @@ class PortalBuilder {
 		echo "<div id=\"bash_close\">";
 		echo "<a onclick=\"hideSettingsBash()\"><img src=\"./icons/close_button.png\"/></a>";
 		echo "</div>";
-		echo "<div id=\"bash_name\"><h4>Phaenovum- Bash</h4></div>";
+		echo "<div id=\"bash_name\"><h4>Phaenovum-Bash</h4></div>";
 		echo "</div>";
 		echo "</div>";
 		
