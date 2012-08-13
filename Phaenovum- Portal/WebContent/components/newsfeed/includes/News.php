@@ -104,8 +104,16 @@
 		$text = str_replace("\'", "&prime;", $text);
 		$text = str_replace("\n",'<br>', $text);
 		
-		//Jetzt die Smileys, kommen später
-		//$text = str_replace("<3", '<img src="./images/"', $subject)
+		//Jetzt die Smileys
+		$text = str_replace("<3", '<img src="icons/heart.png" />', $text);
+		$text = str_replace(":)", '<img src="icons/smile.png" />', $text);
+		$text = str_replace(":O", '<img src="icons/surprised.png" />', $text);
+		$text = str_replace(":D", '<img src="icons/grin.png" />', $text);
+		$text = str_replace(":P", '<img src="icons/tongue.png" />', $text);
+		$text = str_replace(":(", '<img src="icons/unhappy.png" />', $text);
+		$text = str_replace(";)", '<img src="icons/wink.png" />', $text);
+		
+		//Returnen
 		return $text;
 	}
 	
