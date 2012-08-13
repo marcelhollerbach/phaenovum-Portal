@@ -1,5 +1,4 @@
 <?php
-require 'icon.php';
 /*
  *
  */
