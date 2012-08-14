@@ -12,43 +12,43 @@ class PortalBuilder {
 		require_once './bash/Authorization.php';
 		$this -> _ursprung = $_SERVER['SERVER_NAME'];
 		$this -> _icon_settings_files = array();
-		$icon_settings_files = array();
-		if (is_dir('./icon_settings/')) {
-			if ($dir = opendir('./icon_settings/')) {
-				while (($file = readdir($dir)) !== FALSE) {
-					if ($file != '..' && $file != '.'&&$file != 'default.ini') {
-						if (is_file('./icon_settings/'.$file)) {
-							$icon_settings_files[] = $file;
-						}
-					}
-				}
-				closedir($dir);
+		$this -> readIcons();
+	}
+
+	private function readIcons() {
+		$this -> _icon_settings_files;
+		$comand = 'SELECT * FROM com_icons';
+		$result = mysql_query($comand);
+		if (!$result) {
+			echo "error".mysql_error();
+		} else {
+			while ($icon = mysql_fetch_array($result)) {
+				$this -> _icon_settings_files[$icon['name']] = $icon;
 			}
 		}
-		$this -> _icon_settings_files = $icon_settings_files;
 	}
 
 	function content() {
 		echo "<div id=\"small_sidebar\" onclick=\"dropOut()\" ></div>
 		<div id=\"sidebar_holder\" style=\"display: none\">
-			<div id=\"halbtransparent\"></div>
-			<div id=\"sidebar\" onmouseleave=\"dropin()\">";
-
-		for ($i = 0, $groesse = sizeof($this -> _icon_settings_files); $i < $groesse; ++$i) {
-			$parsed_ini = parse_ini_file('./icon_settings/' . $this -> _icon_settings_files[$i]);
-			$icon = $parsed_ini['icon'];
-			$name = $parsed_ini['name'];
-			$popup = $parsed_ini['popup'];
-			$link;
-			if ($this -> _ursprung == '192.168.3.10' || $this -> _ursprung == 'fileserver') {
-				//netzwerk intern
-				$link = $parsed_ini['in_network'];
-			} else {
-				//nicht intern
-				$link = $parsed_ini['out_network'];
+		<div id=\"halbtransparent\"></div>
+		<div id=\"sidebar\" onmouseleave=\"dropin()\">";
+		$i = 0;
+		foreach ($this ->_icon_settings_files as $icon) {
+			if($icon['published']){
+				$link;
+				if ($this -> _ursprung == '192.168.3.10' || $this -> _ursprung == 'fileserver') {
+					//netzwerk intern
+					$link = $icon['in_network'];
+				} else {
+					//nicht intern
+					$link = $icon['out_network'];
+				}
+				$this -> barIcon($link,  $icon['icon'],  $icon['name'], $icon['popup'], $i);
+				$i += 1;
+			}else{
+				echo "hidden";
 			}
-			$this -> barIcon($link, $icon, $name, $popup, $i);
-
 		}
 		$this -> barSettings();
 		echo "</div>
@@ -64,7 +64,7 @@ class PortalBuilder {
 		} else {
 			echo "<a href=\"" . $link . "\" onclick=\"setSite('" . $link . "')\" target=\"output\"  oncontextmenu=\"contextOut(" . $id . "); return false\">";
 		}
-		echo "<img src=\"./icon_images/" . $icon . "\" title=\"" . $name . "\" /></a>";
+		echo "<img src=\"" . $icon . "\" title=\"" . $name . "\" /></a>";
 		echo "</div>";
 		//Contextmenu
 		echo "<div id=\"context_menu\" name=\"context\" onmouseleave=\"contextIn(" . $id . ")\" style=\" display: none;\">";
@@ -106,21 +106,21 @@ class PortalBuilder {
 		echo "<div id=\"bash_content\" name=\"bash_content\">";
 		//content
 		$userbash = new UserBash();
-		 if (!isset($_SESSION['login']) || !$_SESSION['login']) {
+		if (!isset($_SESSION['login']) || !$_SESSION['login']) {
 			//nicht eingeloggt
-			if(isset($_POST['loginsucces'])){
+			if (isset($_POST['loginsucces'])) {
 				echo $_POST['loginsucces'];
-				 $userbash -> login($_POST['loginsucces']);
-			}else{
-				 $userbash -> login('none');
+				$userbash -> login($_POST['loginsucces']);
+			} else {
+				$userbash -> login('none');
 			}
-		 }else{
-			 if(isset($_POST['application'])){
-				 $userbash -> content($_POST['application']);
-			 }else{
-				 $userbash -> content('none');
-			 }
-		 }
+		} else {
+			if (isset($_POST['application'])) {
+				$userbash -> content($_POST['application']);
+			} else {
+				$userbash -> content('none');
+			}
+		}
 		echo "</div>";
 		echo "</div>";
 		echo "<div id=\"bash_topbar\">";
@@ -130,7 +130,7 @@ class PortalBuilder {
 		echo "<div id=\"bash_name\"><h4>Phaenovum-Bash</h4></div>";
 		echo "</div>";
 		echo "</div>";
-		
+
 	}
 
 }

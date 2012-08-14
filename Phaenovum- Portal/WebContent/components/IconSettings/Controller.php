@@ -15,7 +15,7 @@ class IconSettingsController {
 		$comand = 'SELECT * FROM com_icons';
 		$result = mysql_query($comand);
 		if (!$result) {
-			echo "error";
+			echo "error" . mysql_error();
 		} else {
 			while ($icon = mysql_fetch_array($result)) {
 				$this -> _icons[$icon['name']] = $icon;
@@ -45,20 +45,20 @@ class IconSettingsController {
 			}
 			echo "<script type=\"text/javascript\">";
 			//name
-		$this ->jsarray('names', $name);
+			$this -> jsarray('names', $name);
 			//position
-		$this ->jsarray('position', $position);
+			$this -> jsarray('position', $position);
 			//icon
-		$this ->jsarray('icon', $iconurl);
+			$this -> jsarray('icon', $iconurl);
 			//in_network
-		$this ->jsarray('in_net', $in);
+			$this -> jsarray('in_net', $in);
 			//out_network
-		$this ->jsarray('out_net', $out);
+			$this -> jsarray('out_net', $out);
 			//popup
-		$this ->jsarray('popup', $popup);
+			$this -> jsarray('popup', $popup);
 			//published
-		$this ->jsarray('published', $publish);
-			echo "setEdits(names,position,icon,in_net,out_net,popup,published)";
+			$this -> jsarray('published', $publish);
+			echo "setEdits(names,position,icon,in_net,out_net,popup,published);";
 			echo "</script>";
 		}
 		echo "<div id=\"leftlist\">";
@@ -103,12 +103,17 @@ class IconSettingsController {
 		$this -> checkbox('published', 'veröffentlichen');
 		echo "<input  type=\"submit\" value=\"Edit\">";
 		echo "</form>";
+		echo "<script type=\"text/javascript\">";
+		if(sizeof($name) > 0){
+			echo "setEdit(0);";
+		}
+		echo "</script>";
 		echo "</div>";
 	}
 
 	function jsarray($name, $array) {
-			echo " var $name = new Array(";
-			echo '"' . implode('","', $array) . '"); ';
+		echo " var $name = new Array(";
+		echo '"' . implode('","', $array) . '"); ';
 	}
 
 	function textfield($name, $schrift) {
@@ -153,24 +158,31 @@ class IconSettingsController {
 			return NULL;
 		}
 	}
-	static function editIcon($currentname,$name,$icon,$in_network,$out_network,$popup,$published){
+
+	static function editIcon($currentname, $name, $icon, $in_network, $out_network, $popup, $published) {
 		$con = Settings::getMYSQLConnection();
 		mysql_select_db(Settings::getMYSQLDatenbank(), $con);
-		$cmd = "UPDATE com_icons SET name='".$name."' ,icon='".$icon."' ,in_network='".$in_network."' ,out_network='".$out_network."' ,popup='".$popup."' ,published='".$published."' WHERE name='".$currentname."';";
+		$cmd = "UPDATE com_icons SET name='" . $name . "' ";
+		if ($icon != "") {
+			$cmd .= ",icon='" . $icon . "'";
+		}
+		$cmd .= ",in_network='" . $in_network . "' ,out_network='" . $out_network . "' ,popup='" . $popup . "' ,published='" . $published . "' WHERE name='" . $currentname . "';";
 		$result = mysql_query($cmd);
-		if(!$result){
-			return "Error:".mysql_error($con);
-		}else{
+		if (!$result) {
+			return "Error:" . mysql_error($con);
+		} else {
 			return NULL;
 		}
 	}
-	static function uploadFile($filename){
-		if(move_uploaded_file($filename, './icon_images/'.$_FILES["icon"]["name"])){
+
+	static function uploadFile($filename) {
+		if (move_uploaded_file($filename, './icon_images/' . $_FILES["icon"]["name"])) {
 			return NULL;
-		}else{
+		} else {
 			return "Error";
 		}
 	}
+
 }
 
 if (isset($_POST['task'])) {
@@ -198,28 +210,35 @@ if (isset($_POST['task'])) {
 				exit();
 			}
 			break;
-		case 'editIcon':
+		case 'editIcon' :
 			$currentname = $_POST['currentname'];
 			$new_name = $_POST['new_name'];
-			IconSettingsController::uploadFile($_FILES['icon']['tmp_name']);
-			$icon = './icon_images/'.$_FILES['icon']['name'];
+			$icon = "";
+			if ($_FILES['icon']['name'] != '') {
+				IconSettingsController::uploadFile($_FILES['icon']['tmp_name']);
+				$icon = './icon_images/' . $_FILES['icon']['name'];
+			}
 			$in_network = $_POST['in_network'];
 			$out_network = $_POST['out_network'];
 			$popup = FALSE;
 			$published = FALSE;
-			if(isset($_POST['check'])){
-				if($_POST['check'][0] == 'popup'){
+			if (isset($_POST['check'])) {
+				if ($_POST['check'][0] == 'popup') {
 					$popup = TRUE;
+					if($_POST['check'][1] == 'published'){
+						$published = TRUE;
+					}
 				}
-				if($_POST['check'][0] == 'popup'){
+				if ($_POST['check'][0] == 'published') {
 					$published = TRUE;
 				}
+				
 			}
 			$result = IconSettingsController::editIcon($currentname, $new_name, $icon, $in_network, $out_network, $popup, $published);
-			if($result == NULL){
-				forwarding::routeBack(TRUE, 'IconSettings');
-			}else{
-				forwarding::routeBackwithError(TRUE, 'IconSettings', $result);
+			if ($result == NULL) {
+				//forwarding::routeBack(TRUE, 'IconSettings');
+			} else {
+				//forwarding::routeBackwithError(TRUE, 'IconSettings', $result);
 			}
 			break;
 		default :
