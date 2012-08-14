@@ -63,8 +63,9 @@ class IconSettingsController {
 		}
 		echo "<div id=\"leftlist\">";
 		//echo "<div id=\"icons\">";
-		echo "<form name=\"iconselect\" method=\"POST\" action=\"" . $_SERVER['PHP_SELF'] . "\">";
-		echo "<input type=\"hidden\" name=\"task\" value=\"deleteIcon\">";
+		echo "<form name=\"iconselect\" method=\"POST\" action=\"index.php\">";
+		echo "<input type=\"hidden\" name=\"com\" value=\"IconSettings\">";
+		echo "<input type=\"hidden\" name=\"task\" value=\"Icon\">";
 		$counter = 0;
 		if (sizeof($this -> _icons) != 0) {
 			foreach ($this -> _icons as $icon) {
@@ -77,7 +78,8 @@ class IconSettingsController {
 		echo "</form>";
 		echo "</div>";
 		echo "<div id=\"toolbar\">";
-		echo "<form method=\"POST\" name=\"newIcon\" action=\"" . $_SERVER['PHP_SELF'] . "\">";
+		echo "<form method=\"POST\" name=\"newIcon\" action=\"index.php\">";
+		echo "<input type=\"hidden\" name=\"com\" value=\"IconSettings\">";
 		echo "<input type=\"hidden\" name=\"task\" value=\"newIcon\">";
 		echo "<input type=\"hidden\" name=\"iconname\" value=\"\">";
 		echo "</form>";
@@ -86,7 +88,8 @@ class IconSettingsController {
 		echo "<input  onclick=\"submitDelete();\"type=\"submit\" value=\"deleteIcon\">";
 		echo "</div>";
 		echo "<div id=\"editor\">";
-		echo "<form enctype=\"multipart/form-data\"  method=\"POST\" name=\"editIcon\" action=\"" . $_SERVER['PHP_SELF'] . "\">";
+		echo "<form enctype=\"multipart/form-data\"  method=\"POST\" name=\"editIcon\" action=\"index.php\">";
+		echo "<input type=\"hidden\" name=\"com\" value=\"IconSettings\">";
 		echo "<input type=\"hidden\" name=\"task\" value=\"editIcon\">";
 		echo "<input type=\"hidden\" name=\"currentname\" value=\"\">";
 		//Name
@@ -104,7 +107,7 @@ class IconSettingsController {
 		echo "<input  type=\"submit\" value=\"Edit\">";
 		echo "</form>";
 		echo "<script type=\"text/javascript\">";
-		if(sizeof($name) > 0){
+		if (sizeof($name) > 0) {
 			echo "setEdit(0);";
 		}
 		echo "</script>";
@@ -124,17 +127,69 @@ class IconSettingsController {
 		echo "<input type=\"checkbox\" name=\"check[]\" value=\"" . $name . "\" /> " . $schrift . "<br />";
 	}
 
-	function write_php_ini($array, $file) {
-		$res = array();
-		foreach ($array as $key => $val) {
-			if (is_array($val)) {
-				$res[] = "[$key]";
-				foreach ($val as $skey => $sval)
-					$res[] = "$skey = " . (is_numeric($sval) ? $sval : '"' . $sval . '"');
-			} else
-				$res[] = "$key = " . (is_numeric($val) ? $val : '"' . $val . '"');
+	function task() {
+		if (isset($_POST['task'])) {
+			switch ($_POST['task']) {
+				case 'newIcon' :
+					$result = IconSettingsController::createIcon($_POST['iconname']);
+					if ($result != NULL) {
+						forwarding::routeBackwithError(TRUE, 'IconSettings', $result);
+					} else {
+						forwarding::routeBack(TRUE, 'IconSettings');
+					}
+					break;
+				case 'deleteIcon' :
+					if (isset($_POST['icons'])) {
+						$selectedicons = $_POST['icons'];
+						foreach ($selectedicons as $icon) {
+							if (($result = IconSettingsController::deleteIcon($icon)) != NULL) {
+								forwarding::routeBackwithError(TRUE, 'IconSettings', $result);
+								exit();
+							}
+						}
+						forwarding::routeBack(TRUE, 'IconSettings');
+					} else {
+						forwarding::routeBackwithError(TRUE, 'IconSettings', 'Icon zum Löschen auswählen !');
+						exit();
+					}
+					break;
+				case 'editIcon' :
+					$currentname = $_POST['currentname'];
+					$new_name = $_POST['new_name'];
+					$icon = "";
+					if ($_FILES['icon']['name'] != '') {
+						IconSettingsController::uploadFile($_FILES['icon']['tmp_name']);
+						$icon = './icon_images/' . $_FILES['icon']['name'];
+					}
+					$in_network = $_POST['in_network'];
+					$out_network = $_POST['out_network'];
+					$popup = FALSE;
+					$published = FALSE;
+					if (isset($_POST['check'])) {
+						if ($_POST['check'][0] == 'popup') {
+							$popup = TRUE;
+							if (sizeof($_POST['check']) > 1) {
+								if ($_POST['check'][1] == 'published') {
+									$published = TRUE;
+								}
+							}
+						}
+						if ($_POST['check'][0] == 'published') {
+							$published = TRUE;
+						}
+
+					}
+					$result = IconSettingsController::editIcon($currentname, $new_name, $icon, $in_network, $out_network, $popup, $published);
+					if ($result == NULL) {
+						forwarding::routeBack(TRUE, 'IconSettings');
+					} else {
+						forwarding::routeBackwithError(TRUE, 'IconSettings', $result);
+					}
+					break;
+				default :
+					break;
+			}
 		}
-		safefilerewrite($file, implode("\r\n", $res));
 	}
 
 	static function deleteIcon($name) {
@@ -181,68 +236,6 @@ class IconSettingsController {
 		} else {
 			return "Error";
 		}
-	}
-
-}
-
-if (isset($_POST['task'])) {
-	switch ($_POST['task']) {
-		case 'newIcon' :
-			$result = IconSettingsController::createIcon($_POST['iconname']);
-			if ($result != NULL) {
-				forwarding::routeBackwithError(TRUE, 'IconSettings', $result);
-			} else {
-				forwarding::routeBack(TRUE, 'IconSettings');
-			}
-			break;
-		case 'deleteIcon' :
-			if (isset($_POST['icons'])) {
-				$selectedicons = $_POST['icons'];
-				foreach ($selectedicons as $icon) {
-					if (($result = IconSettingsController::deleteIcon($icon)) != NULL) {
-						forwarding::routeBackwithError(TRUE, 'IconSettings', $result);
-						exit();
-					}
-				}
-				forwarding::routeBack(TRUE, 'IconSettings');
-			} else {
-				forwarding::routeBackwithError(TRUE, 'IconSettings', 'Icon zum Löschen auswählen !');
-				exit();
-			}
-			break;
-		case 'editIcon' :
-			$currentname = $_POST['currentname'];
-			$new_name = $_POST['new_name'];
-			$icon = "";
-			if ($_FILES['icon']['name'] != '') {
-				IconSettingsController::uploadFile($_FILES['icon']['tmp_name']);
-				$icon = './icon_images/' . $_FILES['icon']['name'];
-			}
-			$in_network = $_POST['in_network'];
-			$out_network = $_POST['out_network'];
-			$popup = FALSE;
-			$published = FALSE;
-			if (isset($_POST['check'])) {
-				if ($_POST['check'][0] == 'popup') {
-					$popup = TRUE;
-					if($_POST['check'][1] == 'published'){
-						$published = TRUE;
-					}
-				}
-				if ($_POST['check'][0] == 'published') {
-					$published = TRUE;
-				}
-				
-			}
-			$result = IconSettingsController::editIcon($currentname, $new_name, $icon, $in_network, $out_network, $popup, $published);
-			if ($result == NULL) {
-				//forwarding::routeBack(TRUE, 'IconSettings');
-			} else {
-				//forwarding::routeBackwithError(TRUE, 'IconSettings', $result);
-			}
-			break;
-		default :
-			break;
 	}
 }
 ?>

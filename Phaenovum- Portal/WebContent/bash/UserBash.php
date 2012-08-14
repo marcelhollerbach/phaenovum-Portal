@@ -73,7 +73,11 @@ class UserBash {
 			$inst = $lalab -> getInstance();
 			$name = $lalab -> getName();
 			//echo "<a id=\"tabbeditem\" onclick=\"refreshbashApplication('" . $name . "')\">" . $name . "</a>";
-			echo "<div id=\"tabbeditem\">";
+			if ($name == $request) {
+				echo "<div id=\"tabbeditemselect\">";
+			}else{
+				echo "<div id=\"tabbeditem\">";
+			}
 			echo "<form id=\"tabbeditem\" action=\"index.php\" method=\"POST\">";
 			echo "<input type=\"hidden\" name=\"request\" value=\"settings\">";
 			echo "<input type=\"hidden\" name=\"application\" value=\"".$name."\">";
@@ -84,7 +88,7 @@ class UserBash {
 			$counter = $counter + 1;
 		}
 		//echo "<a id=\"tabbeditem\" name=\"a_logout\" onclick=\"logout()\" >Logout</a>";
-		echo "<form id=\"tabbeditem\" action=\"login.php\" method=\"POST\">";
+		echo "<form id=\"tabbeditemselect\" action=\"login.php\" method=\"POST\">";
 		echo "<input type=\"hidden\" name=\"request\" value=\"logout\">";
 		echo "<input type=\"submit\" value=\"Logout\"\">";
 		echo "</form>";

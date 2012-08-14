@@ -94,6 +94,10 @@ if(isset($_POST['request'])){
 if(isset($_POST['site'])){
 	$site = $_POST['site'];
 }
+if(isset($_POST['com'])){
+	$component = ComponentController::getComponent($_POST['com']);
+	$component ->task();
+}
 if(isset($_POST['error'])){
 	$error = $_POST['error'];
 }
