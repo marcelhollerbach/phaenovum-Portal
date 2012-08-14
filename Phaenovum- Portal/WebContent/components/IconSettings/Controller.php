@@ -86,11 +86,13 @@ class IconSettingsController {
 		echo "<input  onclick=\"submitDelete();\"type=\"submit\" value=\"deleteIcon\">";
 		echo "</div>";
 		echo "<div id=\"editor\">";
-		echo "<form method=\"POST\" name=\"editIcon\" action=\"" . $_SERVER['PHP_SELF'] . "\">";
+		echo "<form enctype=\"multipart/form-data\"  method=\"POST\" name=\"editIcon\" action=\"" . $_SERVER['PHP_SELF'] . "\">";
+		echo "<input type=\"hidden\" name=\"task\" value=\"editIcon\">";
+		echo "<input type=\"hidden\" name=\"currentname\" value=\"\">";
 		//Name
-		$this -> textfield('name', 'Name');
+		$this -> textfield('new_name', 'Name');
 		//Icon
-		echo "Icon Url: <input name=\"icon\" type=\"file\" size=\"30\" accept=\"*.png\"> </br>";
+		echo "Icon Url: <input name=\"icon\" type=\"file\" size=\"30\" accept=\"*.png\"> <div style=\"display:none\" name=\"currentpic\">Aktuelles Bild:</br><img name=\"currpic\"/> </div> </br>";
 		//in network
 		$this -> textfield('in_network', 'In Netwerk Adresse');
 		//outnetwork
@@ -114,7 +116,7 @@ class IconSettingsController {
 	}
 
 	function checkbox($name, $schrift) {
-		echo "<input type=\"checkbox\" name=\"" . $name . "\" value=\"" . $name . "\" /> " . $schrift . "<br />";
+		echo "<input type=\"checkbox\" name=\"check[]\" value=\"" . $name . "\" /> " . $schrift . "<br />";
 	}
 
 	function write_php_ini($array, $file) {
@@ -151,7 +153,24 @@ class IconSettingsController {
 			return NULL;
 		}
 	}
-
+	static function editIcon($currentname,$name,$icon,$in_network,$out_network,$popup,$published){
+		$con = Settings::getMYSQLConnection();
+		mysql_select_db(Settings::getMYSQLDatenbank(), $con);
+		$cmd = "UPDATE com_icons SET name='".$name."' ,icon='".$icon."' ,in_network='".$in_network."' ,out_network='".$out_network."' ,popup='".$popup."' ,published='".$published."' WHERE name='".$currentname."';";
+		$result = mysql_query($cmd);
+		if(!$result){
+			return "Error:".mysql_error($con);
+		}else{
+			return NULL;
+		}
+	}
+	static function uploadFile($filename){
+		if(move_uploaded_file($filename, './icon_images/'.$_FILES["icon"]["name"])){
+			return NULL;
+		}else{
+			return "Error";
+		}
+	}
 }
 
 if (isset($_POST['task'])) {
@@ -177,6 +196,30 @@ if (isset($_POST['task'])) {
 			} else {
 				forwarding::routeBackwithError(TRUE, 'IconSettings', 'Icon zum Löschen auswählen !');
 				exit();
+			}
+			break;
+		case 'editIcon':
+			$currentname = $_POST['currentname'];
+			$new_name = $_POST['new_name'];
+			IconSettingsController::uploadFile($_FILES['icon']['tmp_name']);
+			$icon = './icon_images/'.$_FILES['icon']['name'];
+			$in_network = $_POST['in_network'];
+			$out_network = $_POST['out_network'];
+			$popup = FALSE;
+			$published = FALSE;
+			if(isset($_POST['check'])){
+				if($_POST['check'][0] == 'popup'){
+					$popup = TRUE;
+				}
+				if($_POST['check'][0] == 'popup'){
+					$published = TRUE;
+				}
+			}
+			$result = IconSettingsController::editIcon($currentname, $new_name, $icon, $in_network, $out_network, $popup, $published);
+			if($result == NULL){
+				forwarding::routeBack(TRUE, 'IconSettings');
+			}else{
+				forwarding::routeBackwithError(TRUE, 'IconSettings', $result);
 			}
 			break;
 		default :
