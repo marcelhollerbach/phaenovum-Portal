@@ -50,17 +50,10 @@ if (is_dir('./css/')) {
 						$classname = $name.'Controller';
 						$inst = new $classname();
 						ComponentController::addComponent($name,$inst);
-						
 					}
 				}
 			}
 		}
-	//	foreach ($componentdirs as $componentdir) {
-	//			$files = scandir($componentdir);
-	//			if(file_exists($componentdir.'/Controller.php')){
-	//				ComponentController::init();
-	//			}
-	//	}
 		foreach ($componentdirs as $componentdir) {
 			if (is_dir($componentdir . '/css')) {
 				$files = scandir($componentdir . '/css');

@@ -39,10 +39,10 @@ class UserBash {
 		// 			$this -> items[] = new TabbedItem('Newsfeed-einreichung', new Component('News einrichtung'));
 		// 		}
 		// 		if (Authorization::searchForPermissions('irc')) {
-			// 			$this -> items[] = new TabbedItem('IRC', new Component('irc-Chat'));
-			// 		}
+		// 			$this -> items[] = new TabbedItem('IRC', new Component('irc-Chat'));
+		// 		}
 		//if (Authorization::searchForPermissions('IconSettings')) {
-			//$this -> items[] = new TabbedItem('IconSettings', ComponentController::getComponent('IconSettings'));
+		//$this -> items[] = new TabbedItem('IconSettings', ComponentController::getComponent('IconSettings'));
 		//}
 	}
 
@@ -74,11 +74,13 @@ class UserBash {
 		$contents = array();
 		echo "<div id=\"head\">";
 		$counter = 0;
+		$selected = FALSE;
 		foreach (($this -> items) as $lalab) {
 			$inst = $lalab -> getInstance();
 			$name = $lalab -> getName();
 			if ($name == $request) {
 				echo "<div id=\"tabbeditemselect\">";
+				$selected = TRUE;
 			} else {
 				echo "<div id=\"tabbeditem\">";
 			}
@@ -101,11 +103,13 @@ class UserBash {
 
 		if ($request == 'none') {
 			$application = ($this -> items);
-			$content = $application[0] -> getInstance();
-			$name = $application[0] -> getName();
-			echo "<div id=\"tabbedpane\" >";
-			$content -> render();
-			echo "</div>";
+			if(sizeof($application) > 0){
+				$content = $application[0] -> getInstance();
+				$name = $application[0] -> getName();
+				echo "<div id=\"tabbedpane\" >";
+				$content -> render();
+				echo "</div>";
+			}
 		} else {
 			foreach (($this -> items) as $application) {
 				$content = $application -> getInstance();
