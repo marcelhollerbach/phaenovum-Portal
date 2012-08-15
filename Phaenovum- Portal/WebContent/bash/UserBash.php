@@ -7,7 +7,7 @@
 class UserBash {
 	private $items;
 	function __construct() {
-		
+
 	}
 
 	private function searchInArray($array, $word) {
@@ -26,30 +26,35 @@ class UserBash {
 		//irc chat jeder
 		//$permissions_string = Authorization::getPermissions();
 		//$permissions = explode("&", $permissions_string);
-		$this -> items = array();	
-		if (Authorization::searchForPermissions('news_p')) {
-			$this -> items[] = new TabbedItem('newsfeed', ComponentController::getComponent('newsfeed'));
+		$this -> items = array();
+		foreach(ComponentController::getComponents() as $name => $component){
+			if (Authorization::searchForPermissions($name)) {
+				$this -> items[] = new TabbedItem($name,$component);
+			}
 		}
-		if (Authorization::searchForPermissions('news_e')) {
-			$this -> items[] = new TabbedItem('Newsfeed-einreichung', new Component('News einrichtung'));
-		}
-		if (Authorization::searchForPermissions('irc')) {
-			$this -> items[] = new TabbedItem('IRC', new Component('irc-Chat'));
-		}
-		if (Authorization::searchForPermissions('icons')) {
-			$this -> items[] = new TabbedItem('IconSettings', ComponentController::getComponent('IconSettings'));
-		}
+		//if (Authorization::searchForPermissions('newsfeed')) {
+		//	$this -> items[] = new TabbedItem('newsfeed', ComponentController::getComponent('newsfeed'));
+		//}
+		// 		if (Authorization::searchForPermissions('news_e')) {
+		// 			$this -> items[] = new TabbedItem('Newsfeed-einreichung', new Component('News einrichtung'));
+		// 		}
+		// 		if (Authorization::searchForPermissions('irc')) {
+			// 			$this -> items[] = new TabbedItem('IRC', new Component('irc-Chat'));
+			// 		}
+		//if (Authorization::searchForPermissions('IconSettings')) {
+			//$this -> items[] = new TabbedItem('IconSettings', ComponentController::getComponent('IconSettings'));
+		//}
 	}
 
 	public function login($succes) {
 		echo "<div id=\"login\">";
-		if($succes == 'failed'){
+		if ($succes == 'failed') {
 			echo "<h4> Login Fehlgeschlafen, bitte Probieren Sie es erneut </h4>";
-		}else{
+		} else {
 			echo "<h4> Login:</h4>";
 		}
 		echo "<div id=\"field\">";
-		echo "<form action=\"login.php\" method=\"POST\">";
+		echo "<form action=\"index.php\" method=\"POST\">";
 		echo "<input type=\"hidden\" name=\"request\" value=\"login\">";
 		echo "<label id=\"label_usr\" for=\"usr\"> Benutzername </label>";
 		echo "<input onmouseover=\"unvisible('label_usr',this,0)\" onkeydown=\"unvisible('label_usr',this,1)\" onmouseleave=\"unvisible('label_usr',this,-1)\"id=\"usr\" type=\"text\" name=\"usr\"/> <br>";
@@ -72,23 +77,22 @@ class UserBash {
 		foreach (($this -> items) as $lalab) {
 			$inst = $lalab -> getInstance();
 			$name = $lalab -> getName();
-			//echo "<a id=\"tabbeditem\" onclick=\"refreshbashApplication('" . $name . "')\">" . $name . "</a>";
 			if ($name == $request) {
 				echo "<div id=\"tabbeditemselect\">";
-			}else{
+			} else {
 				echo "<div id=\"tabbeditem\">";
 			}
 			echo "<form id=\"tabbeditem\" action=\"index.php\" method=\"POST\">";
 			echo "<input type=\"hidden\" name=\"request\" value=\"settings\">";
-			echo "<input type=\"hidden\" name=\"application\" value=\"".$name."\">";
-			echo "<input type=\"submit\" value=\"".$name."\">";
+			echo "<input type=\"hidden\" name=\"application\" value=\"" . $name . "\">";
+			echo "<input type=\"submit\" value=\"" . $name . "\">";
 			echo "</form>";
 			echo "</div>";
 			$contents[] = $inst;
 			$counter = $counter + 1;
 		}
 		//echo "<a id=\"tabbeditem\" name=\"a_logout\" onclick=\"logout()\" >Logout</a>";
-		echo "<form id=\"tabbeditemselect\" action=\"login.php\" method=\"POST\">";
+		echo "<form id=\"tabbeditemselect\" action=\"index.php\" method=\"POST\">";
 		echo "<input type=\"hidden\" name=\"request\" value=\"logout\">";
 		echo "<input type=\"submit\" value=\"Logout\"\">";
 		echo "</form>";
@@ -99,7 +103,7 @@ class UserBash {
 			$application = ($this -> items);
 			$content = $application[0] -> getInstance();
 			$name = $application[0] -> getName();
-			echo "<div id=\"tabbedpane\" name=\"tabbed" . $counter . "\" >";
+			echo "<div id=\"tabbedpane\" >";
 			$content -> render();
 			echo "</div>";
 		} else {
@@ -107,7 +111,7 @@ class UserBash {
 				$content = $application -> getInstance();
 				$name = $application -> getName();
 				if ($name == $request) {
-					echo "<div id=\"tabbedpane\" name=\"tabbed" . $counter . "\">";
+					echo "<div id=\"tabbedpane\"\">";
 					$content -> render();
 					echo "</div>";
 				}

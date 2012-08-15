@@ -47,7 +47,7 @@ class PortalBuilder {
 				$this -> barIcon($link,  $icon['icon'],  $icon['name'], $icon['popup'], $i);
 				$i += 1;
 			}else{
-				echo "hidden";
+				//echo "hidden";
 			}
 		}
 		$this -> barSettings();
@@ -108,12 +108,7 @@ class PortalBuilder {
 		$userbash = new UserBash();
 		if (!isset($_SESSION['login']) || !$_SESSION['login']) {
 			//nicht eingeloggt
-			if (isset($_POST['loginsucces'])) {
-				echo $_POST['loginsucces'];
-				$userbash -> login($_POST['loginsucces']);
-			} else {
-				$userbash -> login('none');
-			}
+			$userbash -> login('none');
 		} else {
 			if (isset($_POST['application'])) {
 				$userbash -> content($_POST['application']);

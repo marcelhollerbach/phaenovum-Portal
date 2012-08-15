@@ -1,5 +1,4 @@
 <?php
-
 class forwarding {
 	static $url;
 	static function routeBackwithError($bash,$application,$error){

@@ -1,11 +1,11 @@
 <?php
-include './Directions.php';
-include './ComponentController.php';
-include './PortalBuilder.php';
-include './settings/Settings.php';
-include './bash/UserBash.php';
-include './bash/Compontents.php';
-include './bash/Authorization.php';
+require './Directions.php';
+require './ComponentController.php';
+require './PortalBuilder.php';
+require './settings/Settings.php';
+require './bash/UserBash.php';
+require './bash/Compontents.php';
+require './bash/Authorization.php';
 //Componentobject
 ComponentController::init();
 //all componentdirs
@@ -46,7 +46,7 @@ if (is_dir('./css/')) {
 					if (is_dir('./components/'.$dir)) {
 						$componentdirs[] = './components/'.$dir;
 						$name = $dir;
-						include './components/'.$name.'/Controller.php';
+						require './components/'.$name.'/Controller.php';
 						$classname = $name.'Controller';
 						$inst = new $classname();
 						ComponentController::addComponent($name,$inst);
@@ -89,6 +89,16 @@ $builder = new PortalBuilder();
 if(isset($_POST['request'])){
 	if($_POST['request'] == 'settings'){
 		$settings = TRUE;
+	}else if($_POST['request'] == 'login'){
+		//login
+		$usr = $_POST['usr'];
+		$pw = $_POST['pw'];
+		$inst = Authorization::getInst();
+		$inst -> login($usr,$pw);
+		$settings = TRUE;
+	}else if($_POST['request'] == 'logout'){
+		$inst = Authorization::getInst();
+		$inst -> logout();
 	}
 }
 if(isset($_POST['site'])){

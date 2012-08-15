@@ -12,7 +12,7 @@ class ComponentController {
 		return self::$components[$name];
 	}
 	public static function getComponents(){
-		print_r(self::$components);
+		//print_r(self::$components);
 		return self::$components;
 	}	
 }

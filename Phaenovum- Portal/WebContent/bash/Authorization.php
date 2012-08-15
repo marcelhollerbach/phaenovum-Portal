@@ -3,11 +3,41 @@
  * 
  */
 class Authorization {
-	
-	function __construct($argument) {
+	private static $inst;
+	function __construct() {
 		
 	}
+	function login($usr,$pw){
+		if($usr == 'admin'&& Settings::checkAdminPW($pw)){
+		//admin logged in
+		$_SESSION['login'] = TRUE;
+		$_SESSION['usr'] = $usr;
+		//Superadmin => all rights
+		$permission = '';
+		foreach (ComponentController::getComponents() as $name => $component) {
+			if($permission == ''){
+				$permission = $name;
+			}else{
+				$permission .= '&'.$name;
+			}
+		}
 
+		$_SESSION['permission'] = $permission;
+		$succes = TRUE;
+		}else{
+			$succes = FALSE;
+			//TODO LDAP- auth
+		}
+	}
+	function logout(){
+		session_destroy();
+	}
+	static function getInst(){
+        if (null === self::$inst) {
+             self::$inst = new self;
+         }
+         return self::$inst;
+	}
 	static function getPermissions(){
 		if(isset($_SESSION['permission'])){
 		return $_SESSION['permission'];
@@ -30,7 +60,7 @@ class Authorization {
 	}
 	static function getUserName(){
 		if(isset($_SESSION['usr'])){
-		return $_SESSION['usr'];
+			return $_SESSION['usr'];
 		}else{
 			return null;
 		}
