@@ -24,3 +24,9 @@
 		</div>
 	</body>
 </html>
+<?php
+	//Check if the Editor had been triggered
+	if(isset($_POST['submit'])){
+		echo "Test";
+	}
+?>

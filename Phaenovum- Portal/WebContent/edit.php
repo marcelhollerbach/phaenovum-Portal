@@ -2,6 +2,10 @@
 /**
  * Hier schreiben wir alle Daten aus dem Editor in die Datenbank
  */
+ require_once("settings/Settings.php");
+ require_once("components/newsfeed/includes/Database.php");
+ require_once("components/newsfeed/includes/News.php");
+ 
  $settings = new Settings();
  $DB = new Database($settings);
  
