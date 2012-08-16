@@ -14,12 +14,20 @@ class Authorization {
 			}else{
 				echo "error: cannot connect";
 			}
+			$this -> bind = ldap_bind($this -> ldapcon) or die ('no anonymos bind');
 		}
 	}
 	function getAllLdapGroups(){
 		if(Settings::getLDAPServer() != 'disable'){
-			$result = ldap_search($this->ldapcon,'ou=group,dc=marcel,dc=local','(objectClass=cn)');
-			print_r($result);
+			$names = array();
+			$result = ldap_search($this->ldapcon,'ou=group,dc=marcel,dc=local','cn=*');
+			$data = ldap_get_entries($this->ldapcon, $result);
+			foreach($data as $group){
+				if($group['cn'][0] != ''){
+					$names[] = $group['cn'][0];
+				}	
+			}
+			return $names;
 		}
 	}
 	function login($usr,$pw){
@@ -52,7 +60,7 @@ class Authorization {
 				}
 			}
 		}
-		$this ->getAllLdapGroups();
+		//$this ->getAllLdapGroups();
 	}
 	function logout(){
 		if(Settings::getLDAPServer() != 'disable'){

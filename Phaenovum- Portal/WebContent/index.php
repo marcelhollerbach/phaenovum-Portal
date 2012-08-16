@@ -100,6 +100,7 @@ if(isset($_POST['site'])){
 if(isset($_POST['com'])){
 	$component = ComponentController::getComponent($_POST['com']);
 	$component ->task();
+	//$settings = TRUE;
 }
 if(isset($_POST['error'])){
 	$error = $_POST['error'];
