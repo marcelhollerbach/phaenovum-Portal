@@ -113,7 +113,6 @@
 		$text = str_replace(":(", '<img src="icons/unhappy.png" />', $text);
 		$text = str_replace(";)", '<img src="icons/wink.png" />', $text);
 		
-		//Returnen
 		return $text;
 	}
 	
