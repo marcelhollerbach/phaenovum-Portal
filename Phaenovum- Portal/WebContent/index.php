@@ -20,6 +20,9 @@ $openbash = FALSE;
 $site = '';
 //posible errormessages;
 $error = '';
+//InternetExplorer detection
+$u_agent = $_SERVER['HTTP_USER_AGENT'];
+$ub = False;
 //check for stylesheets and Javascriptdatas for the system
 if (is_dir('./css/')) {
 			$files = scandir('./css/');
@@ -130,12 +133,19 @@ if(isset($_POST['error'])){
 		$builder -> content();
 		if($openbash){
 			echo "<script type=\"text/javascript\">showSettingsBash();";
+			//echo "alert(\"Mit Ie könnte es zu Problemem kommen, bitte benutzen sie einen der Verfügbaren Browsern: Mozila,Chrome,Opera,Safari\");";
+			//echo "alert('Mit Internetexplorer könnte es zu Problemem kommen, bitte benutzen sie einen der Verfügbaren Browsern:Mozila,Chrome,Opera,Safari\');";
+			
 		}
 		if($site != ''){
 			echo "setIFrame('".$site."');";
 		}
 		if($error != ''){
 			echo "throwError(\"".$error."\");";
+		}
+		if(preg_match('/MSIE/i',$u_agent))
+		{
+		echo "alert('Mit Internetexplorer könnte es zu Problemem kommen, bitte benutzen sie einen der Verfügbaren Browsern:Mozila,Chrome,Opera,Safari\');";
 		}
 		echo "</script>";
 		?>

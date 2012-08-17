@@ -27,7 +27,7 @@ class forwarding {
 		<body>
 		<form name=\"back\" action=\"index.php\" method=\"POST\">";
 		if ($bash == TRUE) {
-			echo "<input type=\"hidden\" name=\"request\" value=\"settings\">";
+			echo "<input type=\"hidden\" name=\"request\" value=\"bash\">";
 		}
 		if ($application != NULL) {
 			echo "<input type=\"hidden\" name=\"application\" value=\"".$application."\">";

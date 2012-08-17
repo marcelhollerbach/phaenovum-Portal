@@ -85,7 +85,7 @@ class UserBash {
 				echo "<div id=\"tabbeditem\">";
 			}
 			echo "<form id=\"tabbeditem\" action=\"index.php\" method=\"POST\">";
-			echo "<input type=\"hidden\" name=\"request\" value=\"settings\">";
+			echo "<input type=\"hidden\" name=\"request\" value=\"bash\">";
 			echo "<input type=\"hidden\" name=\"application\" value=\"" . $name . "\">";
 			echo "<input type=\"submit\" value=\"" . $name . "\">";
 			echo "</form>";
