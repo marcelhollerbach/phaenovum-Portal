@@ -24,11 +24,46 @@ class Authorization {
 			$data = ldap_get_entries($this->ldapcon, $result);
 			foreach($data as $group){
 				if($group['cn'][0] != ''){
-					$names[] = $group['cn'][0];
-				}	
+					$names['cn'][] = $group['cn'][0];
+					$names['gidnumber'][] = $group['gidnumber'][0];
+				}
 			}
 			return $names;
 		}
+	}
+	function groupOfUser($usr){
+		$groups = $this -> getAllLdapGroups();
+		if(Settings::getLDAPServer() != 'disable'){
+			$attribute = array("gidnumber");
+			$result = ldap_search($this->ldapcon,'ou=people,dc=marcel,dc=local','uid='.$usr,$attribute);
+			$entry = ldap_get_entries($this->ldapcon, $result);
+			$gidnumber = $entry[0]['gidnumber'][0];
+			foreach($groups['gidnumber'] as $key => $groupgidnumber){
+				if($gidnumber == $groupgidnumber){
+					return $groups['cn'][$key];
+				}
+			}
+			return null;
+		}
+	}
+	function getAllmysqlGroups(){
+		$cmd = "SELECT * FROM com_ldap_group;";
+		$result = mysql_query($cmd,Settings::getMYSQLConnection());
+		$groups = '';
+		while ($group = mysql_fetch_array($result)) {
+			$groups['names'][] = $group['name'];
+			$groups['componentgroups'][] = $group['componentgroups'];
+		}
+		return $groups;
+	}
+	function getPermissionFor($group){
+		$groups = $this -> getAllmysqlGroups();
+		foreach($groups['names'] as $key => $groupdb){
+			if($group == $groupdb ){
+				return $groups['componentgroups'][$key];
+			}
+		}
+		return '';
 	}
 	function login($usr,$pw){
 		if($usr == 'admin'&& Settings::checkAdminPW($pw)){
@@ -53,7 +88,10 @@ class Authorization {
 				if($this -> bind){
 					$_SESSION['login'] = TRUE;
 					$_SESSION['usr'] = $usr;
-					$_SESSION['permission'] = '';
+					$group = $this -> groupOfUser($usr);
+					$permission = $this -> getPermissionFor($group);
+					//echo $permission;
+					$_SESSION['permission'] = $permission;
 				}else{
 					forwarding::routeBackwithError(TRUE, 'none', ldap_error($this ->ldapcon));
 					//$succes = FALSE;

@@ -68,7 +68,7 @@ class ldapBackendController{
 	function fixDatabase(){
 		$inst = Authorization::getInst();
 		$ldapgroups = $inst ->getAllLdapGroups();
-		foreach($ldapgroups as $realldapgroup){
+		foreach($ldapgroups['cn'] as $realldapgroup){
 			$found = FALSE;
 			//look for all groups
 			foreach($this ->groups['names'] as $mysqlLdapName){
@@ -102,10 +102,8 @@ class ldapBackendController{
 		foreach($_POST['permission'] as $checked){
 			$permission .= "&".$checked;
 		}
-		echo "DEBUG: ";
-		echo $_POST['groupname'];
-		echo $permission;
 		$this ->update($_POST['groupname'],$permission);
+		forwarding::routeBack(TRUE, 'IconSettings');
 	}
 }
 ?>
