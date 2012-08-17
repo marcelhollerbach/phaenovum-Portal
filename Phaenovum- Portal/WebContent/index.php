@@ -15,7 +15,7 @@ $css = array();
 //all js files
 $js = array(); 
 //draw settings
-$settings = FALSE;
+$openbash = FALSE;
 //site to display
 $site = '';
 //posible errormessages;
@@ -80,18 +80,19 @@ $builder = new PortalBuilder();
 //MethodCaller
 //Post abfragen
 if(isset($_POST['request'])){
-	if($_POST['request'] == 'settings'){
-		$settings = TRUE;
+	if($_POST['request'] == 'bash'){
+		$openbash = TRUE;
 	}else if($_POST['request'] == 'login'){
 		//login
 		$usr = $_POST['usr'];
 		$pw = $_POST['pw'];
 		$inst = Authorization::getInst();
 		$inst -> login($usr,$pw);
-		$settings = TRUE;
+		forwarding::routeBack(TRUE);
 	}else if($_POST['request'] == 'logout'){
 		$inst = Authorization::getInst();
 		$inst -> logout();
+		forwarding::routeBack();
 	}
 }
 if(isset($_POST['site'])){
@@ -127,7 +128,7 @@ if(isset($_POST['error'])){
 		</iframe>
 		<?php
 		$builder -> content();
-		if($settings){
+		if($openbash){
 			echo "<script type=\"text/javascript\">showSettingsBash();";
 		}
 		if($site != ''){

@@ -87,7 +87,7 @@ class PortalBuilder {
 		echo "<div id=\"barIcon_settings\">";
 		echo "<div id=\"doc\">";
 		echo "<form name=\"setting\" action=\"index.php\" method=\"POST\">";
-		echo "<input type=\"hidden\" name=\"request\" value=\"settings\">";
+		echo "<input type=\"hidden\" name=\"request\" value=\"bash\">";
 		echo "<input type=\"hidden\" name=\"site\" value=\"\">";
 		echo "<input type=\"image\" src=\"./icon_images/ICONPORTALphaenovum.png\">";
 		echo "</form>";

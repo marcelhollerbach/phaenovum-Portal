@@ -133,7 +133,7 @@ class IconSettingsController {
 				case 'newIcon' :
 					$result = IconSettingsController::createIcon($_POST['iconname']);
 					if ($result != NULL) {
-						forwarding::routeBackwithError(TRUE, 'IconSettings', $result);
+						forwarding::routeBack(TRUE, 'IconSettings', $result);
 					} else {
 						forwarding::routeBack(TRUE, 'IconSettings');
 					}
@@ -149,7 +149,7 @@ class IconSettingsController {
 						}
 						forwarding::routeBack(TRUE, 'IconSettings');
 					} else {
-						forwarding::routeBackwithError(TRUE, 'IconSettings', 'Icon zum Löschen auswählen !');
+						forwarding::routeBack(TRUE, 'IconSettings', 'Icon zum Löschen auswählen !');
 						exit();
 					}
 					break;
@@ -183,7 +183,7 @@ class IconSettingsController {
 					if ($result == NULL) {
 						forwarding::routeBack(TRUE, 'IconSettings');
 					} else {
-						forwarding::routeBackwithError(TRUE, 'IconSettings', $result);
+						forwarding::routeBack(TRUE, 'IconSettings', $result);
 					}
 					break;
 				default :
