@@ -30,9 +30,13 @@ class PortalBuilder {
 
 	function content() {
 		echo "<div id=\"small_sidebar\" onclick=\"dropOut()\" ></div>
-		<div id=\"sidebar_holder\" style=\"display: none\">
-		<div id=\"halbtransparent\"></div>
-		<div id=\"sidebar\" onmouseleave=\"dropin()\">";
+				<div id=\"sidebar_holder\" style=\"display: none\">
+				<div id=\"halbtransparent\"></div>
+				<div id=\"sidebar\" onmouseleave=\"dropin()\">";
+		echo"<div id=\"barspace\">";
+		echo"<div name=\"moveBtn\" onmouseenter=\"moveTop()\" id=\"scrollbuttonTop\"></div>";
+		echo"<div id=\"viewpoint\" name=\"viewpoint\">";
+		echo"<div name=\"movetarget\">";
 		$i = 0;
 		foreach ($this ->_icon_settings_files as $icon) {
 			if($icon['published']){
@@ -50,9 +54,14 @@ class PortalBuilder {
 				//echo "hidden";
 			}
 		}
+		echo "</div>";
+		echo "</div>";
+		echo"<div name=\"moveBtn\" onmouseenter=\"moveBot()\" id=\"scrollbuttonBot\"></div>";
+		echo "</div>";
+		echo "<script type=\"text/javascript\">initNav(".sizeof($this ->_icon_settings_files).");</script>";
 		$this -> barSettings();
 		echo "</div>
-			</div>";
+				</div>";
 		$this -> createbash();
 	}
 

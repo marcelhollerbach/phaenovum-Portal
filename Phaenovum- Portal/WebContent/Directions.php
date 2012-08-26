@@ -3,7 +3,9 @@ class forwarding {
 	static $url;
 	/**
 	 * Will route back the the index.php
-	 * @param string $bash
+	 * @param string $bash	/**
+	 * Load all Components from the ./components directory
+	 *
 	 * 		if true the bashboard will be opened
 	 * @param string $application
 	 * 		If you enter the name of an application this one will be displayed.

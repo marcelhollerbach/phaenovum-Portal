@@ -13,7 +13,7 @@ $componentdirs = array();
 //all css file
 $css = array();
 //all js files
-$js = array(); 
+$js = array();
 //draw settings
 $openbash = FALSE;
 //site to display
@@ -25,58 +25,53 @@ $u_agent = $_SERVER['HTTP_USER_AGENT'];
 $ub = False;
 //check for stylesheets and Javascriptdatas for the system
 if (is_dir('./css/')) {
-			$files = scandir('./css/');
-			foreach ($files as $file) {
-				if ($file != '.' && $file != '..') {
-					$css[] = './css/'.$file;
-				}
-			}
+	$files = scandir('./css/');
+	foreach ($files as $file) {
+		if ($file != '.' && $file != '..') {
+			$css[] = './css/'.$file;
 		}
-		if (is_dir('./js/')) {
-			$files = scandir('./js/');
-			foreach ($files as $file) {
-				if ($file != '.' && $file != '..') {
-					$js[] = './js/'.$file;
-				}
-			}
+	}
+}
+if (is_dir('./js/')) {
+	$files = scandir('./js/');
+	foreach ($files as $file) {
+		if ($file != '.' && $file != '..') {
+			$js[] = './js/'.$file;
 		}
+	}
+}
 //check for stylesheets and Javascriptdatas in the datas
-		$componentdirs = array();
-		if (is_dir('./components/')) {
-			$dirs = scandir('./components/');
-			foreach ($dirs as $dir) {
-				if ($dir != '.' && $dir != '..') {
-					if (is_dir('./components/'.$dir)) {
-						$componentdirs[] = './components/'.$dir;
-						$name = $dir;
-						require './components/'.$name.'/Controller.php';
-						$classname = $name.'Controller';
-						$inst = new $classname();
-						ComponentController::addComponent($name,$inst);
-					}
-				}
+$componentdirs = array();
+if (is_dir('./components/')) {
+	$dirs = scandir('./components/');
+	foreach ($dirs as $dir) {
+		if ($dir != '.' && $dir != '..') {
+			if (is_dir('./components/'.$dir)) {
+				$componentdirs[] = './components/'.$dir;
 			}
 		}
-		foreach ($componentdirs as $componentdir) {
-			if (is_dir($componentdir . '/css')) {
-				$files = scandir($componentdir . '/css');
-				foreach ($files as $file) {
-					if ($file != '.' && $file != '..') {
-						$css[] = $componentdir . '/css/' . $file;
-						//echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"".$componentdir . '/css/' . $file . "\" />";
-					}
-				}
-			}
-			if (is_dir($componentdir . '/js')) {
-				$files = scandir($componentdir . '/js');
-				foreach ($files as $file) {
-					if ($file != '.' && $file != '..') {
-						$js[] = $componentdir . '/js/' . $file;
-						//echo "<script src=\"".$componentdir . '/js/' . $file . "\" type=\"text/javascript\"></script>";
-					}
-				}
+	}
+}
+foreach ($componentdirs as $componentdir) {
+	if (is_dir($componentdir . '/css')) {
+		$files = scandir($componentdir . '/css');
+		foreach ($files as $file) {
+			if ($file != '.' && $file != '..') {
+				$css[] = $componentdir . '/css/' . $file;
+				//echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"".$componentdir . '/css/' . $file . "\" />";
 			}
 		}
+	}
+	if (is_dir($componentdir . '/js')) {
+		$files = scandir($componentdir . '/js');
+		foreach ($files as $file) {
+			if ($file != '.' && $file != '..') {
+				$js[] = $componentdir . '/js/' . $file;
+				//echo "<script src=\"".$componentdir . '/js/' . $file . "\" type=\"text/javascript\"></script>";
+			}
+		}
+	}
+}
 session_start();
 //create the Portal
 $builder = new PortalBuilder();
@@ -112,30 +107,25 @@ if(isset($_POST['error'])){
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Phaenovum Portal</title>
-		<?php
-		foreach ($css as $file ){
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Phaenovum Portal</title>
+<?php
+foreach ($css as $file ){
 			echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . $file . "\" />";
-			
+
 		}
 		foreach ($js as $file ){
 					echo "<script src=\"" . $file . "\" type=\"text/javascript\"></script>";
-		}		
+		}
 		?>
-	</head>
-	<body>
-		<iframe name="output" scrolling="no" src="./Tutorial.html">
-
-		</iframe>
-		<?php
-		$builder -> content();
-		if($openbash){
+</head>
+<body>
+	<iframe name="output" scrolling="no" src="./Tutorial.html"> </iframe>
+	<?php
+	$builder -> content();
+	if($openbash){
 			echo "<script type=\"text/javascript\">showSettingsBash();";
-			//echo "alert(\"Mit Ie könnte es zu Problemem kommen, bitte benutzen sie einen der Verfügbaren Browsern: Mozila,Chrome,Opera,Safari\");";
-			//echo "alert('Mit Internetexplorer könnte es zu Problemem kommen, bitte benutzen sie einen der Verfügbaren Browsern:Mozila,Chrome,Opera,Safari\');";
-			
 		}
 		if($site != ''){
 			echo "setIFrame('".$site."');";
@@ -145,9 +135,9 @@ if(isset($_POST['error'])){
 		}
 		if(preg_match('/MSIE/i',$u_agent))
 		{
-		echo "alert('Mit Internetexplorer könnte es zu Problemem kommen, bitte benutzen sie einen der Verfügbaren Browsern:Mozila,Chrome,Opera,Safari\');";
+			echo "alert('Mit Internetexplorer könnte es zu Problemem kommen, bitte benutzen sie einen der Verfügbaren Browsern:Mozila,Chrome,Opera,Safari\');";
 		}
 		echo "</script>";
 		?>
-	</body>
+</body>
 </html>
