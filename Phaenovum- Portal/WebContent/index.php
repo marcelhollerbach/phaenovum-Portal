@@ -130,7 +130,7 @@ foreach ($css as $file ){
 <body onload="rendersize()">
 	<iframe name="output" scrolling="no" src="./Tutorial.html"> </iframe>
 	<?php
-	$builder -> content();
+	$builder -> content($application);
 	if($openbash){
 			echo "<script type=\"text/javascript\">showSettingsBash();";
 		}
