@@ -28,13 +28,13 @@ class PortalBuilder {
 		}
 	}
 
-	function content() {
+	function content($application) {
 		echo "<div id=\"small_sidebar\" onclick=\"dropOut()\" ></div>
 				<div id=\"sidebar_holder\" style=\"display: none\">
 				<div id=\"halbtransparent\"></div>
 				<div id=\"sidebar\" onmouseleave=\"dropin()\">";
 		echo"<div id=\"barspace\">";
-		echo"<div name=\"moveBtn\" onmouseenter=\"moveTop()\" id=\"scrollbuttonTop\"></div>";
+		echo"<div name=\"moveBtn\" onmouseenter=\"moveTop(1)\" onmouseleave=\"moveTop(0)\" id=\"scrollbuttonTop\"></div>";
 		echo"<div id=\"viewpoint\" name=\"viewpoint\">";
 		echo"<div name=\"movetarget\">";
 		$i = 0;
@@ -56,13 +56,13 @@ class PortalBuilder {
 		}
 		echo "</div>";
 		echo "</div>";
-		echo"<div name=\"moveBtn\" onmouseenter=\"moveBot()\" id=\"scrollbuttonBot\"></div>";
+		echo"<div name=\"moveBtn\" onmouseenter=\"moveBot(1)\" onmouseleave=\"moveBot(0)\" id=\"scrollbuttonBot\"></div>";
 		echo "</div>";
 		echo "<script type=\"text/javascript\">initNav(".sizeof($this ->_icon_settings_files).");</script>";
 		$this -> barSettings();
 		echo "</div>
 				</div>";
-		$this -> createbash();
+		$this -> createbash($application);
 	}
 
 	protected function barIcon($link, $icon, $name, $popup, $id) {
@@ -105,7 +105,7 @@ class PortalBuilder {
 
 	}
 
-	public function createbash() {
+	public function createbash($application) {
 		echo "<div id=\"bash_holder\" style=\" display: none;\">";
 		//background
 		echo "<div id=\"bash_background\">";
@@ -119,11 +119,11 @@ class PortalBuilder {
 			//nicht eingeloggt
 			$userbash -> login('none');
 		} else {
-			if (isset($_POST['application'])) {
-				$userbash -> content($_POST['application']);
-			} else {
-				$userbash -> content('none');
-			}
+			//if (isset($_POST['application'])) {
+			$userbash -> content($application);
+			//} else {
+			//	$userbash -> content('none');
+			//}
 		}
 		echo "</div>";
 		echo "</div>";

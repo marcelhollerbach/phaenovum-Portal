@@ -20,6 +20,8 @@ $openbash = FALSE;
 $site = '';
 //posible errormessages;
 $error = '';
+//application
+$application = 'none';
 //InternetExplorer detection
 $u_agent = $_SERVER['HTTP_USER_AGENT'];
 $ub = False;
@@ -96,9 +98,14 @@ if(isset($_POST['request'])){
 if(isset($_POST['site'])){
 	$site = $_POST['site'];
 }
+if(isset($_POST['application'])){
+	$application = $_POST['application'];
+}
 if(isset($_POST['com'])){
 	$component = ComponentController::getComponent($_POST['com']);
 	$component ->task();
+	$openbash = TRUE;
+	$application = $_POST['com'];
 	//$settings = TRUE;
 }
 if(isset($_POST['error'])){
@@ -120,7 +127,7 @@ foreach ($css as $file ){
 		}
 		?>
 </head>
-<body>
+<body onload="rendersize()">
 	<iframe name="output" scrolling="no" src="./Tutorial.html"> </iframe>
 	<?php
 	$builder -> content();

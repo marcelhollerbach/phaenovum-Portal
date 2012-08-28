@@ -39,10 +39,11 @@ iframe {
 
 #viewpoint {
 	position: absolute;
-	top: 40px;
+	top: 0px;
 	wight: 64px;
-	bottom: 40px;
+	bottom: 0px;
 	overflow: hidden;
+	z-index: 2;
 }
 
 #scrollbuttonTop {
@@ -50,7 +51,8 @@ iframe {
 	top: 0px;
 	height: 30px;
 	width: 64px;
-	background: black;
+	background: transparent;
+	z-index: 3;
 }
 
 #scrollbuttonBot {
@@ -58,8 +60,9 @@ iframe {
 	bottom: 5px;
 	height: 30px;
 	width: 64px;
-	background: black;
+	background: transparent;
 	width: 64px;
+	z-index: 3;
 }
 
 #barspace {
@@ -77,7 +80,7 @@ iframe {
 	opacity: 0.5;
 	-moz-opacity: 0.5;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-	filter: alpha(opacity =   50);
+	filter: alpha(opacity =           50);
 	background: rgb(242, 146, 0);
 	z-index: 3;
 }
@@ -89,7 +92,7 @@ iframe {
 	opacity: 0.5;
 	-moz-opacity: 0.5;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-	filter: alpha(opacity =   50);
+	filter: alpha(opacity =           50);
 	background: black;
 	z-index: 2;
 }

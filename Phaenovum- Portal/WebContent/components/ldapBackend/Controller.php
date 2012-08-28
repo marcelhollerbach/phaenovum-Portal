@@ -42,68 +42,80 @@ class ldapBackendController{
 		}
 	}
 	function getAllmysqlGroups(){
-		$cmd = "SELECT * FROM com_ldap_group;";
-		$result = mysql_query($cmd,$this ->con);
-		while ($group = mysql_fetch_array($result)) {
-			$this -> groups['names'][] = $group['name'];
-			$this -> groups['componentgroups'][] = $group['componentgroups'];
+		if(Settings::getLDAPServer() != 'disable'){
+			$cmd = "SELECT * FROM com_ldap_group;";
+			$result = mysql_query($cmd,$this ->con);
+			while ($group = mysql_fetch_array($result)) {
+				$this -> groups['names'][] = $group['name'];
+				$this -> groups['componentgroups'][] = $group['componentgroups'];
+			}
 		}
 		//print_r($this -> groups);
 	}
 	function checkPermission($rawpermission){
-		$permissions = explode("&", $rawpermission);
-		$result = "";
-		foreach($permissions as $permission){
-			$found = FALSE;
-			foreach (ComponentController::getComponents() as $name => $component){
-				if($permission == $name){
-					$found = TRUE;
+		if(Settings::getLDAPServer() != 'disable'){
+			$permissions = explode("&", $rawpermission);
+			$result = "";
+			foreach($permissions as $permission){
+				$found = FALSE;
+				foreach (ComponentController::getComponents() as $name => $component){
+					if($permission == $name){
+						$found = TRUE;
+					}
 				}
-			}
-			if($found){
-				$result .= "&".$permission;
+				if($found){
+					$result .= "&".$permission;
+				}
 			}
 		}
 	}
 	function fixDatabase(){
-		$inst = Authorization::getInst();
-		$ldapgroups = $inst ->getAllLdapGroups();
-		foreach($ldapgroups['cn'] as $realldapgroup){
-			$found = FALSE;
-			//look for all groups
-			foreach($this ->groups['names'] as $mysqlLdapName){
-				if($mysqlLdapName == $realldapgroup){
-					$found = TRUE;
+		if(Settings::getLDAPServer() != 'disable'){
+			$inst = Authorization::getInst();
+			$ldapgroups = $inst ->getAllLdapGroups();
+			foreach($ldapgroups['cn'] as $realldapgroup){
+				$found = FALSE;
+				//look for all groups
+				foreach($this ->groups['names'] as $mysqlLdapName){
+					if($mysqlLdapName == $realldapgroup){
+						$found = TRUE;
+					}
 				}
-			}
-			if(!$found){
-				//group not in mysql => create it.
-				//$this -> create($realldapgroup);
-				if(!$this -> create($realldapgroup)){
-					echo mysql_error($this ->con);
-				}
+				if(!$found){
+					//group not in mysql => create it.
+					//$this -> create($realldapgroup);
+					if(!$this -> create($realldapgroup)){
+						echo mysql_error($this ->con);
+					}
 
+				}
 			}
 		}
 	}
 	function update($name,$permission){
-		$cmd = "UPDATE com_ldap_group SET componentgroups='" . $permission . "'WHERE name='" . $name . "';";
-		$result = mysql_query($cmd,$this->con);
+		if(Settings::getLDAPServer() != 'disable'){
+			$cmd = "UPDATE com_ldap_group SET componentgroups='" . $permission . "'WHERE name='" . $name . "';";
+			$result = mysql_query($cmd,$this->con);
+		}
 		return $result;
 	}
 
 	function create($ldapname){
-		$cmd = 'INSERT INTO com_ldap_group (name) VALUES (\'' . $ldapname . '\');';
-		$result = mysql_query($cmd,$this->con);
+		if(Settings::getLDAPServer() != 'disable'){
+			$cmd = 'INSERT INTO com_ldap_group (name) VALUES (\'' . $ldapname . '\');';
+			$result = mysql_query($cmd,$this->con);
+		}
 		return $result;
 	}
 	function task(){
-		$permission = "";
-		foreach($_POST['permission'] as $checked){
-			$permission .= "&".$checked;
+		if(Settings::getLDAPServer() != 'disable'){
+			$permission = "";
+			foreach($_POST['permission'] as $checked){
+				$permission .= "&".$checked;
+			}
+			$this ->update($_POST['groupname'],$permission);
+			forwarding::routeBack(TRUE, 'IconSettings');
 		}
-		$this ->update($_POST['groupname'],$permission);
-		forwarding::routeBack(TRUE, 'IconSettings');
 	}
 }
 ?>
