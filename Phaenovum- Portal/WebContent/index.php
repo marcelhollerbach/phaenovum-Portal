@@ -1,11 +1,12 @@
 <?php
-require './Directions.php';
-require './ComponentController.php';
-require './PortalBuilder.php';
-require './settings/Settings.php';
-require './bash/UserBash.php';
-require './bash/Compontents.php';
-require './bash/Authorization.php';
+include './lib/Directions.php';
+include './lib/ComponentController.php';
+include './lib/PortalBuilder.php';
+include './lib/Formbuilder.php';
+include './settings/Settings.php';
+include './bash/UserBash.php';
+include './bash/Compontents.php';
+include './bash/Authorization.php';
 //Componentobject
 ComponentController::init();
 //all componentdirs

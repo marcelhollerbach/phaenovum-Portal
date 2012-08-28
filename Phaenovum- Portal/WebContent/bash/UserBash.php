@@ -1,9 +1,4 @@
 <?php
-//require_once 'Compontents.php';
-//require_once 'Authorization.php';
-//require_once '../components/newsfeed/newsController.php';
-//require_once './newsfeed/newsController.php';
-//require_once './components/iconssettingsComponent/SettingsController.php';
 class UserBash {
 	private $items;
 	function __construct() {
@@ -20,30 +15,12 @@ class UserBash {
 	}
 
 	private function buildMenu() {
-		//icons Menubar
-		//news_p news-publishment
-		//news_e news-einreichen
-		//irc chat jeder
-		//$permissions_string = Authorization::getPermissions();
-		//$permissions = explode("&", $permissions_string);
 		$this -> items = array();
 		foreach(ComponentController::getComponents() as $name => $component){
 			if (Authorization::searchForPermissions($name)) {
 				$this -> items[] = new TabbedItem($name,$component);
 			}
 		}
-		//if (Authorization::searchForPermissions('newsfeed')) {
-		//	$this -> items[] = new TabbedItem('newsfeed', ComponentController::getComponent('newsfeed'));
-		//}
-		// 		if (Authorization::searchForPermissions('news_e')) {
-		// 			$this -> items[] = new TabbedItem('Newsfeed-einreichung', new Component('News einrichtung'));
-		// 		}
-		// 		if (Authorization::searchForPermissions('irc')) {
-		// 			$this -> items[] = new TabbedItem('IRC', new Component('irc-Chat'));
-		// 		}
-		//if (Authorization::searchForPermissions('IconSettings')) {
-		//$this -> items[] = new TabbedItem('IconSettings', ComponentController::getComponent('IconSettings'));
-		//}
 	}
 
 	public function login($succes) {
@@ -53,17 +30,11 @@ class UserBash {
 		} else {
 			echo "<h4> Login:</h4>";
 		}
-		echo "<div id=\"field\">";
 		echo "<form action=\"index.php\" method=\"POST\">";
-		echo "<input type=\"hidden\" name=\"request\" value=\"login\">";
-		echo "<label id=\"label_usr\" for=\"usr\"> Benutzername </label>";
-		echo "<input onmouseover=\"unvisible('label_usr',this,0)\" onkeydown=\"unvisible('label_usr',this,1)\" onmouseleave=\"unvisible('label_usr',this,-1)\"id=\"usr\" type=\"text\" name=\"usr\"/> <br>";
-		echo "</div>";
-		echo "<div id=\"field\">";
-		echo "<label id=\"label_pw\" for=\"usr\"> Passwort </label>";
-		echo "<input onmouseover=\"unvisible('label_pw',this,0)\" onkeydown=\"unvisible('label_pw',this,1)\" onmouseleave=\"unvisible('label_pw',this,-1)\" id=\"pw\"type=\"password\" name=\"pw\"/> <br>";
-		echo "</div>";
-		echo "<input type=\"submit\" value=\"Login\"/>";
+		FormBuilder::renderHidden('login','request');
+		FormBuilder::renderTextField('usr','Benutzername');
+		FormBuilder::renderPasswordfield('pw','Password');
+		FormBuilder::renderButton('Login','login');
 		echo "</form>";
 		echo "</div>";
 
