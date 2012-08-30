@@ -16,9 +16,12 @@ class UserBash {
 
 	private function buildMenu() {
 		$this -> items = array();
-		foreach(ComponentController::getComponents() as $name => $component){
+		$components = ComponentController::getComponents();
+		foreach($components as $comp){
+			$name = $comp->getName();
+			$inst = $comp->getInstance();
 			if (Authorization::searchForPermissions($name)) {
-				$this -> items[] = new TabbedItem($name,$component);
+				$this -> items[] = new TabbedItem($name,$inst);
 			}
 		}
 	}
@@ -46,9 +49,9 @@ class UserBash {
 		echo "<div id=\"head\">";
 		$counter = 0;
 		$selected = FALSE;
-		foreach (($this -> items) as $lalab) {
-			$inst = $lalab -> getInstance();
-			$name = $lalab -> getName();
+		foreach (($this -> items) as $component) {
+			$inst = $component -> getInstance();
+			$name = $component -> getName();
 			if ($name == $request) {
 				echo "<div id=\"tabbeditemselect\">";
 				$selected = TRUE;

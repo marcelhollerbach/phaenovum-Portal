@@ -72,11 +72,11 @@ class Authorization {
 			$_SESSION['usr'] = $usr;
 			//Superadmin => all rights
 			$permission = '';
-			foreach (ComponentController::getComponents() as $name => $component) {
+			foreach (ComponentController::getComponents() as $component) {
 				if($permission == ''){
-					$permission = $name;
+					$permission = $component -> getPermission();
 				}else{
-					$permission .= '&'.$name;
+					$permission .= '&'.$component -> getPermission();
 				}
 			}
 
