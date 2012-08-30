@@ -27,9 +27,10 @@ function setIconName() {
 	$n('iconname')[0].value = name;
 	$n('newIcon')[0].submit();
 }
-function submitDelete() {
-	$n('iconselect')[0].task = 'deleteIcon';
+function submitDeleteIcon() {
+	//$n('iconselect')[0].task = 'deleteIcon';
 	$n('iconselect')[0].submit();
+	//alert('asdf');
 }
 function setEdit(id) {
 	$n('currentname')[0].value = _names[id];
