@@ -1,7 +1,7 @@
 <?php
 /*
  *
- */
+*/
 class IconSettingsController {
 	private $_icons;
 	private $con;
@@ -65,11 +65,10 @@ class IconSettingsController {
 		//echo "<div id=\"icons\">";
 		echo "<form name=\"iconselect\" method=\"POST\" action=\"index.php\">";
 		echo "<input type=\"hidden\" name=\"com\" value=\"IconSettings\">";
-		echo "<input type=\"hidden\" name=\"task\" value=\"Icon\">";
+		echo "<input type=\"hidden\" name=\"task\" value=\"deleteIcon\">";
 		$counter = 0;
 		if (sizeof($this -> _icons) != 0) {
 			foreach ($this -> _icons as $icon) {
-				//setEdit($counter,names,position,icon,in_net,out_net,popup,published)
 				echo "<input type=\"checkbox\" name=\"icons[]\" onClick=\"setEdit($counter)\" value=\"" . $icon['name'] . "\" />" . $icon['name'] . "</br>";
 
 				$counter = $counter + 1;
@@ -83,9 +82,8 @@ class IconSettingsController {
 		echo "<input type=\"hidden\" name=\"task\" value=\"newIcon\">";
 		echo "<input type=\"hidden\" name=\"iconname\" value=\"\">";
 		echo "</form>";
-		echo "<input  onclick=\"setIconName();\"type=\"submit\" value=\"newIcon\">";
-
-		echo "<input  onclick=\"submitDelete();\"type=\"submit\" value=\"deleteIcon\">";
+		echo "<input  onclick=\"setIconName();\"type=\"submit\" value=\"newIcon\"/>";
+		echo "<input  onclick=\"submitDeleteIcon();\"type=\"submit\" value=\"deleteIcon\">";
 		echo "</div>";
 		echo "<div id=\"editor\">";
 		echo "<form enctype=\"multipart/form-data\"  method=\"POST\" name=\"editIcon\" action=\"index.php\">";
@@ -120,7 +118,7 @@ class IconSettingsController {
 	}
 
 	function textfield($name, $schrift) {
-		echo $schrift . ": <input type=\"text\" name=\"" . $name . "\"/> <br>";
+		FormBuilder::renderTextField($name,$schrift,FALSE);
 	}
 
 	function checkbox($name, $schrift) {
@@ -129,16 +127,22 @@ class IconSettingsController {
 
 	function task() {
 		if (isset($_POST['task'])) {
+			echo $_POST['task'];
 			switch ($_POST['task']) {
 				case 'newIcon' :
-					$result = IconSettingsController::createIcon($_POST['iconname']);
-					if ($result != NULL) {
-						forwarding::routeBack(TRUE, 'IconSettings', $result);
-					} else {
-						forwarding::routeBack(TRUE, 'IconSettings');
+					if(isset($_POST['iconnmame'])){
+						$result = IconSettingsController::createIcon($_POST['iconname']);
+						if ($result != NULL) {
+							forwarding::routeBack(TRUE, 'IconSettings', $result);
+						} else {
+							forwarding::routeBack(TRUE, 'IconSettings');
+						}
+					}else{
+						forwarding::routeBack(TRUE, 'IconSettings', "Namen Angeben !");
 					}
 					break;
 				case 'deleteIcon' :
+					//forwarding::routeBack(TRUE, 'IconSettings', 'Icon zum Löschen auswählen !');
 					if (isset($_POST['icons'])) {
 						$selectedicons = $_POST['icons'];
 						foreach ($selectedicons as $icon) {
@@ -147,7 +151,7 @@ class IconSettingsController {
 								exit();
 							}
 						}
-						forwarding::routeBack(TRUE, 'IconSettings');
+						//forwarding::routeBack(TRUE, 'IconSettings');
 					} else {
 						forwarding::routeBack(TRUE, 'IconSettings', 'Icon zum Löschen auswählen !');
 						exit();
@@ -202,7 +206,6 @@ class IconSettingsController {
 			return NULL;
 		}
 	}
-
 	static function createIcon($name) {
 		$con = Settings::getMYSQLConnection();
 		mysql_select_db(Settings::getMYSQLDatenbank(), $con);
