@@ -5,7 +5,6 @@ include './lib/PortalBuilder.php';
 include './lib/Formbuilder.php';
 include './settings/Settings.php';
 include './bash/UserBash.php';
-include './bash/Compontents.php';
 include './bash/Authorization.php';
 //Componentobject
 ComponentController::init();
@@ -104,7 +103,7 @@ if(isset($_POST['application'])){
 }
 if(isset($_POST['com'])){
 	$component = ComponentController::getComponent($_POST['com']);
-	$component ->task();
+	$component ->getInstance()->task();
 	$openbash = TRUE;
 	$application = $_POST['com'];
 	//$settings = TRUE;
