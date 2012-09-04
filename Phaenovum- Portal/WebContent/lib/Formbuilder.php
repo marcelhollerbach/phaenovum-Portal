@@ -13,14 +13,14 @@ class FormBuilder {
 			echo "</div>";
 		}
 	}
-	static function renderPasswordfield($_name,$_value,$_allInOne = TRUE){
+	static function renderPasswordfield($_name,$_schirft,$_allInOne = TRUE){
 		if($_allInOne == TRUE){
 			echo "<div id=\"field\">";
-			echo "<label id=\"label_".$_name."\"> ".$_value." </label>";
+			echo "<label id=\"label_".$_name."\"> ".$_schirft." </label>";
 			echo "<input onmouseover=\"unvisible('label_".$_name."',this,0)\" onkeydown=\"unvisible('label_".$_name."',this,1)\" onmouseleave=\"unvisible('label_".$_name."',this,-1)\" id=\"pw\"type=\"password\" name=\"$_name\"/> <br>";
 			echo "</div>";
 		}else{
-			echo $_name;
+			echo $_schirft;
 			echo "<div id=\"field\">";
 			echo "<input id=\"pw\"type=\"password\" name=\"$_name\"/> <br>";
 			echo "</div>";
