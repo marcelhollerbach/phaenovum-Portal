@@ -116,7 +116,7 @@ if(isset($_POST['error'])){
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Phaenovum Portal</title>
+<title>phaenovum Portal</title>
 <?php
 foreach ($css as $file ){
 			echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . $file . "\" />";
