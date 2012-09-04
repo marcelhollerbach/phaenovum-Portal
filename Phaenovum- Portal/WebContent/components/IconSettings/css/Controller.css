@@ -1,29 +1,88 @@
-#icon{
+#icon {
 	
 }
-#toolbar{
+
+#toolbar {
 	position: absolute;
 	float: left;
 	height: 30px;
 	width: 200px;
 	left: 0px;
 	bottom: 0px;
-	border-style: solid;
-	border-color: black;
 }
-#leftlist{
+
+#holder {
+	margin-top: 2px;
+	margin-bottom: 2px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#left {
+	width: auto;
+	height: 26px;
+	-moz-border-radius-bottomleft: 10px; /* Firefox */
+	-moz-border-radius-topleft: 10px; /* Firefox */
+	-webkit-border-radius-bottomleft: 10px; /* Safari, Chrome */
+	-webkit-border-radius-topleft: 10px; /* Safari, Chrome */
+	-khtml-border-radius-bottomleft: 10px;
+	-khtml-border-radius-topleft: 10px; /* Konqueror */
+	border-bottom-left-radius: 10px;
+	border-top-left-radius: 10px;
+	/*right*/
+	-moz-border-radius-bottomright: 0px; /* Firefox */
+	-moz-border-radius-topright: 0px; /* Firefox */
+	-webkit-border-radius-bottomright: 0px; /* Safari, Chrome */
+	-webkit-border-radius-topright: 0px; /* Safari, Chrome */
+	-khtml-border-radius-bottomright: 0px;
+	-khtml-border-radius-topright: 0px; /* Konqueror */
+	border-bottom-right-radius: 0px;
+	border-top-right-radius: 0px;
+	border-width: 1px;
+	border-color: black;
+	background: WHITE;
+	height: 26px;
+}
+
+#right {
+	width: auto;
+	height: 26px;
+	-moz-border-radius-bottomleft: 0px; /* Firefox */
+	-moz-border-radius-topleft: 0px; /* Firefox */
+	-webkit-border-radius-bottomleft: 0px; /* Safari, Chrome */
+	-webkit-border-radius-topleft: 0px; /* Safari, Chrome */
+	-khtml-border-radius-bottomleft: 0px;
+	-khtml-border-radius-topleft: 0px; /* Konqueror */
+	border-bottom-left-radius: 0px;
+	border-top-left-radius: 0px;
+	/*right*/
+	-moz-border-radius-bottomright: 10px; /* Firefox */
+	-moz-border-radius-topright: 10px; /* Firefox */
+	-webkit-border-radius-bottomright: 10px; /* Safari, Chrome */
+	-webkit-border-radius-topright: 10px; /* Safari, Chrome */
+	-khtml-border-radius-bottomright: 10px;
+	-khtml-border-radius-topright: 10px; /* Konqueror */
+	border-bottom-right-radius: 10px;
+	border-top-right-radius: 10px;
+	border-width: 1px;
+	border-color: black;
+	background: WHITE;
+	height: 26px;
+}
+
+#leftlist {
 	overflow: auto;
 	position: absolute;
 	float: left;
 	top: 0px;
 	left: 0px;
 	bottom: 30px;
-	
 	width: 200px;
 	border-style: solid;
 	border-color: black;
 }
-#editor{
+
+#editor {
 	position: absolute;
 	top: 0px;
 	left: 220px;

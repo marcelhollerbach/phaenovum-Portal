@@ -1,6 +1,6 @@
 <?php 
 class FormBuilder {
-	static function renderTextField($_name,$_value,$_allInOne = TRUE){
+	static function renderTextField($_name,$_value,$_allInOne = TRUE,$_txt_value = ""){
 		if($_allInOne == TRUE){
 			echo "<div id=\"field\">";
 			echo "<label id=\"label_".$_name."\"> ".$_value." </label>";
@@ -9,7 +9,7 @@ class FormBuilder {
 		}else{
 			echo $_value;
 			echo "<div id=\"field\">";
-			echo "<input type=\"text\" name=\"$_name\"/> <br>";
+			echo "<input value=\"$_txt_value\" type=\"text\" name=\"$_name\"/> <br>";
 			echo "</div>";
 		}
 	}

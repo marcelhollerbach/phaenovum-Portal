@@ -74,12 +74,13 @@ class Authorization {
 			$permission = '';
 			foreach (ComponentController::getComponents() as $component) {
 				if($permission == ''){
-					$permission = $component -> getPermission();
+					$permission .= $component -> getPrimaryPermission();
+					$permission = '&'.$component -> getPermission();
 				}else{
+					$permission .= '&'.$component -> getPrimaryPermission();
 					$permission .= '&'.$component -> getPermission();
 				}
 			}
-
 			$_SESSION['permission'] = $permission;
 			$succes = TRUE;
 		}else{

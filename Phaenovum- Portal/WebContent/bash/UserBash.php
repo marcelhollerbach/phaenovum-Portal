@@ -18,9 +18,10 @@ class UserBash {
 		$this -> items = array();
 		$components = ComponentController::getComponents();
 		foreach($components as $comp){
+			$permission = $comp->getPrimaryPermission();
 			$name = $comp->getName();
 			$inst = $comp->getInstance();
-			if (Authorization::searchForPermissions($name)) {
+			if (Authorization::searchForPermissions($permission)) {
 				$this -> items[] = new TabbedItem($name,$inst);
 			}
 		}

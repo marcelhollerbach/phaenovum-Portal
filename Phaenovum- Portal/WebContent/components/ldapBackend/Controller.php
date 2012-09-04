@@ -44,10 +44,19 @@ class ldapBackendController{
 			echo "<h4 name=\"ldap-headline\">".$this ->name."</h4>";
 			foreach (ComponentController::getComponents() as $component){
 				$name = $component->getName();
-				if($this -> isChecked($this -> permission,$name)){
-					echo "<input type=\"checkbox\" name=\"permission[]\" checked=\"true\" value=\"$name\"/>$name</br>";
+				$permissions = explode("&", $component -> getPermission());
+				$perm = $component->getPrimaryPermission();
+				if($this -> isChecked($this -> permission,$perm)){
+					echo "<input type=\"checkbox\" name=\"permission[]\" checked=\"true\" value=\"$perm\"/>$perm</br>";
 				}else{
-					echo "<input type=\"checkbox\" name=\"permission[]\" value=\"$name\"/>$name</br>";
+					echo "<input type=\"checkbox\" name=\"permission[]\" value=\"$perm\"/>$perm</br>";
+				}
+				foreach($permissions as $permission){
+					if($this -> isChecked($this -> permission,$permission)){
+						echo "u. <input type=\"checkbox\" name=\"permission[]\" checked=\"true\" value=\"$permission\"/>$permission</br>";
+					}else{
+						echo "u. <input type=\"checkbox\" name=\"permission[]\" value=\"$permission\"/>$permission</br>";
+					}
 				}
 			}
 			echo "<input type=\"submit\" value=\"update\">";
