@@ -116,6 +116,7 @@ class Authorization {
 	static function getPermissions(){
 		if(isset($_SESSION['permission'])){
 			return $_SESSION['permission'];
+			
 		}else{
 			return null;
 		}
@@ -132,6 +133,28 @@ class Authorization {
 			}
 		}
 		return FALSE;
+	}
+	function getLdapField($_field){
+		if(self::getUserName() != 'admin'){
+			$attribute = array($_field);
+			$result = ldap_search($this->ldapcon,'ou=people,dc=marcel,dc=local','uid='.self::getUserName(),$attribute);
+			$entry = ldap_get_entries($this->ldapcon, $result);
+			//print_r($entry);
+			if(!isset($entry[0][$_field])){
+				return NULL;
+				exit();
+			}
+			return $entry[0][$_field][0];
+			//print_r($entry);
+		}else{
+			return NULL;
+		}
+	}
+	function editLDAPField($_field,$_newvalue){
+		$attribute = array();
+		$attribute[$_field] = array();
+		$attribute[$_field][0] = $_newvalue;
+		return ldap_modify($this -> ldapcon,'uid='.self::getUserName().'ou=people,dc=marcel,dc=local', $attribute);
 	}
 	static function getUserName(){
 		if(isset($_SESSION['usr'])){

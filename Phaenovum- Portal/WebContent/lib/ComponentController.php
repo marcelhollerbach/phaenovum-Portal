@@ -38,6 +38,9 @@ class ComponentController {
 	}
 	public static function getComponent($name){
 		foreach (self::$components as $component){
+			//echo $component -> getName();
+			//echo $name;
+			//echo "===";
 			if($component -> getName() == $name){
 				return $component;
 			}
@@ -59,7 +62,10 @@ class Component {
 		$this ->data['inst'] = $inst;
 	}
 	function getName(){
-		return $this ->data['showname'];
+		return $this ->data['pPermission'];
+	}
+	function getShowName(){
+		return $this ->data['showname'];		
 	}
 	function getPermission(){
 		return $this ->data['permission'];

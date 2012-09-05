@@ -19,10 +19,11 @@ class UserBash {
 		$components = ComponentController::getComponents();
 		foreach($components as $comp){
 			$permission = $comp->getPrimaryPermission();
+			$showname = $comp->getShowName();
 			$name = $comp->getName();
 			$inst = $comp->getInstance();
 			if (Authorization::searchForPermissions($permission)) {
-				$this -> items[] = new TabbedItem($name,$inst);
+				$this -> items[] = new TabbedItem($showname,$name,$inst);
 			}
 		}
 	}
@@ -52,6 +53,7 @@ class UserBash {
 		$selected = FALSE;
 		foreach (($this -> items) as $component) {
 			$inst = $component -> getInstance();
+			$showname = $component -> getShowName();
 			$name = $component -> getName();
 			if ($name == $request) {
 				echo "<div id=\"tabbeditemselect\">";
@@ -62,7 +64,7 @@ class UserBash {
 			echo "<form id=\"tabbeditem\" action=\"index.php\" method=\"POST\">";
 			echo "<input type=\"hidden\" name=\"request\" value=\"bash\">";
 			echo "<input type=\"hidden\" name=\"application\" value=\"" . $name . "\">";
-			echo "<input type=\"submit\" value=\"" . $name . "\">";
+			echo "<input type=\"submit\" value=\"" . $showname . "\">";
 			echo "</form>";
 			echo "</div>";
 			$contents[] = $inst;
@@ -106,14 +108,20 @@ class UserBash {
  */
 class TabbedItem {
 	private $_name;
+	private $_showname;
 	private $_instance;
-	function __construct($name, $instance) {
+	function __construct($showname, $name, $instance) {
 		$this -> _name = $name;
+		$this -> _showname = $showname;
 		$this -> _instance = $instance;
 	}
 
 	function getName() {
 		return $this -> _name;
+	}
+
+	function getShowName(){
+		return $this -> _showname;
 	}
 
 	function getInstance() {
