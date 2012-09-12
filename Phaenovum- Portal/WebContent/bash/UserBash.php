@@ -24,6 +24,7 @@ class UserBash {
 			$inst = $comp->getInstance();
 			if (Authorization::searchForPermissions($permission)) {
 				$this -> items[] = new TabbedItem($showname,$name,$inst);
+				//echo "$name  ";
 			}
 		}
 	}
