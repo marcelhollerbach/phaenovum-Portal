@@ -51,12 +51,16 @@ class ldapBackendController{
 				}else{
 					echo "<input type=\"checkbox\" name=\"permission[]\" value=\"$perm\"/>$perm</br>";
 				}
+				//if(sizeof($permissions)!=0){
 				foreach($permissions as $permission){
-					if($this -> isChecked($this -> permission,$permission)){
-						echo "u. <input type=\"checkbox\" name=\"permission[]\" checked=\"true\" value=\"$permission\"/>$permission</br>";
-					}else{
-						echo "u. <input type=\"checkbox\" name=\"permission[]\" value=\"$permission\"/>$permission</br>";
+					if($permission != ""&&$permission != " "){
+						if($this -> isChecked($this -> permission,$permission)){
+							echo "u. <input type=\"checkbox\" name=\"permission[]\" checked=\"true\" value=\"$permission\"/>$permission</br>";
+						}else{
+							echo "u. <input type=\"checkbox\" name=\"permission[]\" value=\"$permission\"/>$permission</br>";
+						}
 					}
+					//}
 				}
 			}
 			echo "<input type=\"submit\" value=\"update\">";
