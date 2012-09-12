@@ -6,6 +6,7 @@ include './lib/Formbuilder.php';
 include './settings/Settings.php';
 include './bash/UserBash.php';
 include './bash/Authorization.php';
+session_start();
 //Componentobject
 ComponentController::init();
 //all componentdirs
@@ -74,7 +75,6 @@ foreach ($componentdirs as $componentdir) {
 		}
 	}
 }
-session_start();
 //create the Portal
 $builder = new PortalBuilder();
 //MethodCaller

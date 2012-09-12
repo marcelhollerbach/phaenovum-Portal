@@ -1,6 +1,5 @@
 <?php
 class forwarding {
-	static $url;
 	/**
 	 * Will route back the the index.php
 	 * @param string $bash	/**
@@ -15,11 +14,6 @@ class forwarding {
 	 * 		If this is not NULL a alert message with the this string as Error will be displayed
 	 */
 	static function routeBack($bash = FALSE,$application = NULL,$error = NULL){
-		$host  = $_SERVER['HTTP_HOST'];
-		$uri   = Settings::getHostverzeichniss();
-		$extra = 'index.php';
-		self::$url = 'http://'.$host.$uri.'/'.$extra.')';
-
 		echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
 			<html>
 		<head>
