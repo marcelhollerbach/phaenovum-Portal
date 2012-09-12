@@ -1,0 +1,8 @@
+# Please copy this file and edit the fields to your values
+ldap-server = '127.0.0.1'
+irc-server = 127.0.0.1
+mysql-server = '127.0.0.1'
+mysql-benutzer = 'Portalusr'
+mysql-password = 'Portalpw'
+mysql-datenbank = 'Portaldb';
+super-admin-pw = 'sample'
