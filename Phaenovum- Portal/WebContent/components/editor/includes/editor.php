@@ -11,7 +11,7 @@
 		<!-- Ein div das die ganze seite einschließt, um einen Abstand auf der linken Seite zu ermöglichen -->
 		<div id="site">
 			<span id="headline" name="headline" style="font-family: Times; font-weight: bold; font-size: 1.4em; padding-left: 2%;"><img src="icons/Pen-icon.png">&nbsp;Schreiben</span>
-			<form action="edit.php" method="get" name="editor">
+			<form action="index.php" method="get" name="editor">
 				<input id="titel" name="titel" type="text" value="Titel" size="63" onclick="leeren('titel');"> <br />
 				<span id="menubar">
 						<a href="#" onclick="insert('text','<u>','</u>')" ><img src="icons/underline.png" /></a>
@@ -22,6 +22,10 @@
 				<span style="padding-left: 2%;"><input id="submitButton" class="subButton" value="Speichern" type="submit"/> &nbsp; <input type="reset" class="subButton" style="line-height: 1.5em;" value="L&ouml;schen" /></span>
 			</form>
 		</div>
+	<!-- PHP Part to tell Formbuilder we need a task form -->
+	<?php
+		FormBuilder::renderHidden("editor","task");
+	?>
 	</body>
 </html>
 <?php
