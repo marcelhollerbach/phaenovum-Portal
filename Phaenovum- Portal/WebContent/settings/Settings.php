@@ -5,7 +5,14 @@ class Settings {
 		$ini = parse_ini_file('settings.ini');
 		return $ini['ldap-server'];
 	}
-
+	public static function getLDAPUserDirectory() {
+		$ini = parse_ini_file('settings.ini');
+		return $ini['ldap-usr-group'];
+	}
+	public static function getLDAPBaseDN() {
+		$ini = parse_ini_file('settings.ini');
+		return $ini['ldap-base-dn'];
+	}
 	public static function getIRCServer() {
 		$ini = parse_ini_file('settings.ini');
 		return $ini['irc-server'];

@@ -22,15 +22,15 @@ irc-server = 'localhost'
 #  LDAP Configuration  #
 ########################
 ldap-server = 'localhost'
-#notice like this'ou=People'
+#notice like this 'ou=People'
 ldap-usr-group = 'ou=people'
-#notice like this'dc=..., dc=...'
+#notice like this 'dc=..., dc=...'
 ldap-base-dn = 'dc=ldap-server, dc=local'
 
 
-#############################
-# Mysql-Server Configuration#
-#############################
+##############################
+# Mysql-Server Configuration #
+##############################
 mysql-server = '127.0.0.1'
 mysql-benutzer = 'Portalusr'
 mysql-password = 'Portalpw'
