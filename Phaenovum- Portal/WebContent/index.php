@@ -6,6 +6,8 @@ include './lib/Formbuilder.php';
 include './settings/Settings.php';
 include './bash/UserBash.php';
 include './bash/Authorization.php';
+include './bash/LdapBackend.php';
+include './bash/Session.php';
 session_start();
 //Componentobject
 ComponentController::init();
