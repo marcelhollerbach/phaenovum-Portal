@@ -3,7 +3,7 @@ class LdapUserDataController {
 	private $submitchanges;
 	private $data;
 	function __construct(){
-		$inst = Authorization::getInst();
+		$inst = Authorization::getInst() ->getLDAPBackend();
 		$this -> data = array();
 		$this -> data['givenname'] = $inst ->getLdapField('givenname');
 		$this -> data['sn'] = $inst ->getLdapField('sn');
@@ -14,7 +14,7 @@ class LdapUserDataController {
 		$this -> data['plz'] = $inst ->getLdapField('postalcode');
 	}
 	function render() {
-		if(Authorization::getUserName() != 'admin'){
+		if(Session::getUser() != 'admin'){
 
 			$givenname = $this -> data['givenname'];
 			$sn = $this -> data['sn'];
@@ -108,7 +108,7 @@ class LdapUserDataController {
 					}
 					break;
 				case "editUsrData":
-					$inst = Authorization::getInst();
+					$inst = Authorization::getInst() ->getLDAPBackend();
 					if(isset($_POST['new_description'])){
 						$inst ->editLDAPField('description', $_POST['new_description']);
 					}

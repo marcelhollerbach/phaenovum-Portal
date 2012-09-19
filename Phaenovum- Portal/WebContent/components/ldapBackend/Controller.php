@@ -1,14 +1,10 @@
 <?php 
 class ldapBackendController{
 	private $con;
-	private $groups;
-	private $name;
-	private $permission;
 	function __construct(){
 		if(Settings::getLDAPServer() != 'disable'){
 			$this -> groups = array();
 			$this ->con = Settings::getMYSQLConnection();
-			$this ->getAllmysqlGroups();
 			$this ->fixDatabase();
 			mysql_select_db(Settings::getMYSQLDatenbank());
 			$this -> name = "";
@@ -17,22 +13,21 @@ class ldapBackendController{
 	}
 	function render(){
 		if(Settings::getLDAPServer() != 'disable'){
-			if($this -> name == ""){
-				$this -> name = $this -> groups['names'][0];
-				$this -> permission = $this -> groups['componentgroups'][0];
-			}
 			echo "<div id=\"ldap-sidebar\">";
-			foreach($this -> groups['names'] as $key => $group){
-				//echo $key;
-				//echo $this ->groups['componentgroups'][$key];
-				//$this ->checkPermission($this ->groups['componentgroups'][$key]);
+			$groups = $this -> getAllmysqlGroups();
+			//print_r($groups);
+			foreach($groups as $group)
+			{
+				//print_r($group);
+				//echo "</br>";
+				//echo $group['names']."</br>";
 				echo "<form action=\"index.php\" method=\"POST\">";
 				echo "<input type=\"hidden\" name=\"com\" value=\"ldapBackend\">";
 				echo "<input type=\"hidden\" name=\"task\" value=\"chgroup\"/>";
-				echo "<input type=\"hidden\" name=\"groupname\"value=\"$group\">";
-				echo "<input type=\"hidden\" name=\"groupPermission\"value=\"".$this ->groups['componentgroups'][$key]."\">";
+				echo "<input type=\"hidden\" name=\"groupname\"value=\"".$group['names']."\">";
+				echo "<input type=\"hidden\" name=\"groupPermission\"value=\"".$group['componentgroups']."\">";
 				//echo "<input onclick=\"setChecks('".$group."','".$this ->groups['componentgroups'][$key]."')\" id=\"linkstyle-button\" type=\"submit\" value=\"".$group."\"/><br>";
-				echo "<input id=\"linkstyle-button\" type=\"submit\" value=\"".$group."\"/><br>";
+				echo "<input id=\"linkstyle-button\" type=\"submit\" value=\"".$group['names']."\"/><br>";
 				echo "</form>";
 			}
 			echo "</div>";
@@ -86,15 +81,7 @@ class ldapBackendController{
 
 	}
 	function getAllmysqlGroups(){
-		if(Settings::getLDAPServer() != 'disable'){
-			$cmd = "SELECT * FROM com_ldap_group;";
-			$result = mysql_query($cmd,$this ->con);
-			while ($group = mysql_fetch_array($result)) {
-				$this -> groups['names'][] = $group['name'];
-				$this -> groups['componentgroups'][] = $group['componentgroups'];
-			}
-		}
-		//print_r($this -> groups);
+		return Authorization::getInst() -> getLDAPBackend() ->getAllmysqlGroups();
 	}
 	// 	function checkPermission($rawpermission){
 	// 		if(Settings::getLDAPServer() != 'disable'){
@@ -116,25 +103,25 @@ class ldapBackendController{
 	// 	}
 	function fixDatabase(){
 		if(Settings::getLDAPServer() != 'disable'){
-			$inst = Authorization::getInst();
+			$inst = Authorization::getInst() ->getLDAPBackend();
 			$ldapgroups = $inst ->getAllLdapGroups();
-			foreach($ldapgroups['cn'] as $realldapgroup){
-				$found = FALSE;
-				//look for all groups
-				foreach($this ->groups['names'] as $mysqlLdapName){
-					if($mysqlLdapName == $realldapgroup){
-						$found = TRUE;
-					}
-				}
-				if(!$found){
-					//group not in mysql => create it.
-					//$this -> create($realldapgroup);
-					if(!$this -> create($realldapgroup)){
-						echo mysql_error($this ->con);
-					}
+			// 			foreach($ldapgroups as $realldapgroup){
+			// 				$found = FALSE;
+			// 				//look for all groups
+			// 				foreach($this ->groups['names'] as $mysqlLdapName){
+			// 					if($mysqlLdapName == $realldapgroup['cn']){
+			// 						$found = TRUE;
+			// 					}
+			// 				}
+			// 				if(!$found){
+			// 					//group not in mysql => create it.
+			// 					//$this -> create($realldapgroup);
+			// 					if(!$this -> create($realldapgroup)){
+			// 						echo mysql_error($this ->con);
+			// 					}
 
-				}
-			}
+			// 				}
+			// 			}
 		}
 	}
 	function update($name,$permission){
