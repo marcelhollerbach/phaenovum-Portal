@@ -64,7 +64,6 @@ class IconSettingsController {
 		echo "<form enctype=\"multipart/form-data\"  method=\"POST\" name=\"editIcon\" action=\"index.php\">";
 		echo "<input type=\"hidden\" name=\"com\" value=\"IconSettings\">";
 		echo "<input type=\"hidden\" name=\"task\" value=\"editIcon\">";
-		echo "<input type=\"hidden\" name=\"currentname\" value=\"\">";
 		if(sizeof($this->_icons) != 0){
 			$icon = $this->_icons[$this -> index];
 			$position = $icon['position'];
@@ -75,6 +74,7 @@ class IconSettingsController {
 			$popup = $icon['popup'];
 			$publish = $icon['published'];
 		}
+		echo "<input type=\"hidden\" name=\"currentname\" value=\"".$name."\">";
 		//Name
 		$this -> textfield('new_name', 'Name',$name);
 		//Icon
@@ -122,11 +122,10 @@ class IconSettingsController {
 			switch ($_POST['task']) {
 				case 'chIcon':
 					$this -> index = $_POST['iconName'];
-					//echo $_POST['iconName'];
 					break;
 				case 'newIcon' :
 					if(isset($_POST['iconname'])){
-						$result = IconSettingsController::createIcon($_POST['iconname']);
+						$result = $this ->createIcon($_POST['iconname']);
 						if ($result != NULL) {
 							forwarding::routeBack(TRUE, 'IconSettings', $result);
 						} else {
@@ -139,7 +138,7 @@ class IconSettingsController {
 				case 'deleteIcon' :
 					if (isset($_POST['iconName'])) {
 						$icon = $_POST['iconName'];
-						if (($result = IconSettingsController::deleteIcon($icon)) != NULL) {
+						if (($result = $this ->deleteIcon($icon)) != NULL) {
 							forwarding::routeBack(TRUE, 'IconSettings', $result);
 							exit();
 						}
@@ -150,7 +149,7 @@ class IconSettingsController {
 					$new_name = $_POST['new_name'];
 					$icon = "";
 					if ($_FILES['icon']['name'] != '') {
-						IconSettingsController::uploadFile($_FILES['icon']['tmp_name']);
+						$this ->uploadFile($_FILES['icon']['tmp_name']);
 						$icon = './icon_images/' . $_FILES['icon']['name'];
 					}
 					$in_network = $_POST['in_network'];
@@ -171,7 +170,7 @@ class IconSettingsController {
 						}
 
 					}
-					$result = IconSettingsController::editIcon($currentname, $new_name, $icon, $in_network, $out_network, $popup, $published);
+					$result = $this ->editIcon($currentname, $new_name, $icon, $in_network, $out_network, $popup, $published);
 					if ($result == NULL) {
 						forwarding::routeBack(TRUE, 'IconSettings');
 					} else {
@@ -184,7 +183,7 @@ class IconSettingsController {
 		}
 	}
 
-	static function deleteIcon($name) {
+	function deleteIcon($name) {
 		$con = Settings::getMYSQLConnection();
 		mysql_select_db(Settings::getMYSQLDatenbank(), $con);
 		$result = mysql_query('DELETE FROM com_icons WHERE name =\'' . $name . '\'');
@@ -194,7 +193,7 @@ class IconSettingsController {
 			return NULL;
 		}
 	}
-	static function createIcon($name) {
+	function createIcon($name) {
 		$con = Settings::getMYSQLConnection();
 		mysql_select_db(Settings::getMYSQLDatenbank(), $con);
 		$result = mysql_query('INSERT INTO com_icons (name) VALUES (\'' . $name . '\')');
@@ -205,7 +204,7 @@ class IconSettingsController {
 		}
 	}
 
-	static function editIcon($currentname, $name, $icon, $in_network, $out_network, $popup, $published) {
+	function editIcon($currentname, $name, $icon, $in_network, $out_network, $popup, $published) {
 		$con = Settings::getMYSQLConnection();
 		mysql_select_db(Settings::getMYSQLDatenbank(), $con);
 		$cmd = "UPDATE com_icons SET name='" . $name . "' ";
@@ -221,7 +220,7 @@ class IconSettingsController {
 		}
 	}
 
-	static function uploadFile($filename) {
+	function uploadFile($filename) {
 		if (move_uploaded_file($filename, './icon_images/' . $_FILES["icon"]["name"])) {
 			return NULL;
 		} else {
