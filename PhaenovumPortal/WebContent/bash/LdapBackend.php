@@ -23,8 +23,10 @@ class LdapBackend{
 			$data = ldap_get_entries($this->ldapcon, $result);
 			foreach($data as $group){
 				if($group['cn'][0] != ''){
-					$names[]['cn'] = $group['cn'][0];
-					$names[]['gidnumber'] = $group['gidnumber'][0];
+					$data = array();
+					$data['cn'] = $group['cn'][0];
+					$data['gidnumber'] = $group['gidnumber'][0];
+					$names[] = $data;
 				}
 			}
 			return $names;
