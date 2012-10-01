@@ -51,14 +51,12 @@ class UserBash {
 		$contents = array();
 		echo "<div id=\"head\">";
 		$counter = 0;
-		$selected = FALSE;
 		foreach (($this -> items) as $component) {
 			$inst = $component -> getInstance();
 			$showname = $component -> getShowName();
 			$name = $component -> getName();
-			if ($name == $request) {
+			if ($name == $request||($counter == 0&&$request == "none")) {
 				echo "<div id=\"tabbeditemselect\">";
-				$selected = TRUE;
 			} else {
 				echo "<div id=\"tabbeditem\">";
 			}
