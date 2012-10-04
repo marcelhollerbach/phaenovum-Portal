@@ -34,6 +34,7 @@ class Authorization {
 				}
 			}
 			$_SESSION['permission'] = $permission;
+			ComponentController::init();
 			$succes = TRUE;
 		}else{
 			if(Settings::getLDAPServer() != 'disable'){
@@ -49,8 +50,10 @@ class Authorization {
 					foreach($groups as $group){
 						$perm = $this -> getPermissionFor($group);
 						$permission .= $perm;
+
 					}
 					$_SESSION['permission'] = $permission;
+					ComponentController::init();
 				}else{
 					forwarding::routeBack(TRUE, 'none', ldap_error($this ->ldapcon));
 					//$succes = FALSE;
