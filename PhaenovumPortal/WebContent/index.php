@@ -4,10 +4,10 @@ include './lib/ComponentController.php';
 include './lib/PortalBuilder.php';
 include './lib/Formbuilder.php';
 include './settings/Settings.php';
-include './bash/UserBash.php';
-include './bash/Authorization.php';
-include './bash/LdapBackend.php';
-include './bash/Session.php';
+include './lib/UserBash.php';
+include './lib/Authorization.php';
+include './lib/LdapBackend.php';
+include './lib/Session.php';
 session_start();
 //Componentobject
 ComponentController::init();
@@ -119,6 +119,7 @@ if(isset($_POST['error'])){
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>phaenovum Portal</title>
+<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico">
 <?php
 foreach ($css as $file ){
 			echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . $file . "\" />";
