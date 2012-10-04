@@ -7,9 +7,6 @@ class PortalBuilder {
 	private $_ursprung;
 
 	function __construct() {
-		require_once './bash/UserBash.php';
-		require_once './settings/Settings.php';
-		require_once './bash/Authorization.php';
 		$this -> _ursprung = $_SERVER['SERVER_NAME'];
 		$this -> _icon_settings_files = array();
 		$this -> readIcons();
@@ -18,7 +15,8 @@ class PortalBuilder {
 	private function readIcons() {
 		$this -> _icon_settings_files;
 		$comand = 'SELECT * FROM com_icons';
-		$result = mysql_query($comand);
+		$con = Settings::getMYSQLConnection();
+		$result = mysql_db_query(Settings::getMYSQLDatenbank(),$comand,$con);
 		if (!$result) {
 			echo "error".mysql_error();
 		} else {
@@ -98,7 +96,7 @@ class PortalBuilder {
 		echo "<form name=\"setting\" action=\"index.php\" method=\"POST\">";
 		echo "<input type=\"hidden\" name=\"request\" value=\"bash\">";
 		echo "<input type=\"hidden\" name=\"site\" value=\"\">";
-		echo "<input type=\"image\" src=\"./icon_images/ICONPORTALphaenovum.png\">";
+		echo "<input type=\"image\" src=\"./icons/bashicon.png\">";
 		echo "</form>";
 		echo "</div>";
 		echo "</div>";
