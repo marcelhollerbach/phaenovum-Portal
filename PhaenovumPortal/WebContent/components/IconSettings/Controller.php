@@ -156,19 +156,11 @@ class IconSettingsController {
 					$out_network = $_POST['out_network'];
 					$popup = FALSE;
 					$published = FALSE;
-					if (isset($_POST['check'])) {
-						if ($_POST['check'][0] == 'popup') {
-							$popup = TRUE;
-							if (sizeof($_POST['check']) > 1) {
-								if ($_POST['check'][1] == 'published') {
-									$published = TRUE;
-								}
-							}
-						}
-						if ($_POST['check'][0] == 'published') {
-							$published = TRUE;
-						}
-
+					if(isset($_POST['popup'])){
+						$popup = TRUE;
+					}
+					if(isset($_POST['published'])){
+						$published = TRUE;
 					}
 					$result = $this ->editIcon($currentname, $new_name, $icon, $in_network, $out_network, $popup, $published);
 					if ($result == NULL) {
