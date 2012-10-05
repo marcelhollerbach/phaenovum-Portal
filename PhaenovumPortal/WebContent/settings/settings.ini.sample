@@ -24,6 +24,8 @@ irc-server = 'localhost'
 ldap-server = 'localhost'
 #notice like this 'ou=People'
 ldap-usr-group = 'ou=people'
+#notice like this 'ou=group'
+ldap-group-group = 'ou=group'
 #notice like this 'dc=..., dc=...'
 ldap-base-dn = 'dc=ldap-server, dc=local'
 
