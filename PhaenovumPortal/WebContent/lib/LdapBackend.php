@@ -19,7 +19,7 @@ class LdapBackend{
 	}
 	public function getAllLdapGroups(){
 		if(Settings::getLDAPServer() != 'disable'){
-			$result = ldap_search($this->ldapcon,"ou=group,".Settings::getLDAPBaseDN(),'cn=*');
+			$result = ldap_search($this->ldapcon,Settings::getLDAPGroupDirectory().",".Settings::getLDAPBaseDN(),'cn=*');
 			$data = ldap_get_entries($this->ldapcon, $result);
 			foreach($data as $group){
 				if($group['cn'][0] != ''){
@@ -36,7 +36,7 @@ class LdapBackend{
 		if(Settings::getLDAPServer() != 'disable'){
 			$groups = array();
 			$attribute = array("*");
-			$result = ldap_search($this->ldapcon,"ou=group,".Settings::getLDAPBaseDN(),'cn=*');
+			$result = ldap_search($this->ldapcon,Settings::getLDAPGroupDirectory().",".Settings::getLDAPBaseDN(),'cn=*');
 			$datagroups = ldap_get_entries($this->ldapcon, $result);
 			$result = ldap_search($this->ldapcon,Settings::getLDAPUserDirectory().",".Settings::getLDAPBaseDN(),'uid='.$usr,$attribute);
 			$entryuser = ldap_get_entries($this->ldapcon, $result);
@@ -86,7 +86,7 @@ class LdapBackend{
 	public function getLdapField($_field){
 		if(Session::getUser() != 'admin'){
 			$attribute = array($_field);
-			$result = ldap_search($this->ldapcon,'ou=people,dc=marcel,dc=local','uid='.Session::getUser(),$attribute);
+			$result = ldap_search($this->ldapcon,Settings::getLDAPUserDirectory().",".Settings::getLDAPBaseDN(),'uid='.Session::getUser(),$attribute);
 			$entry = ldap_get_entries($this->ldapcon, $result);
 			//print_r($entry);
 			if(!isset($entry[0][$_field])){
