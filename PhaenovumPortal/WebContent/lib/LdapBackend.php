@@ -103,7 +103,9 @@ class LdapBackend{
 		$attribute = array();
 		$attribute[$_field] = array();
 		$attribute[$_field] = $_newvalue;
-		$result = ldap_modify($this -> ldapcon,'uid='.self::getUserName().', ou=people, dc=marcel, dc=local', $attribute);
+		$result = ldap_modify($this -> ldapcon,'uid='.self::getUserName().
+				Settings::getLDAPUserDirectory().",".Settings::getLDAPBaseDN(),
+				$attribute);
 		if(!$result){
 			$result = ldap_error($this -> ldapcon);
 			print_r($attribute);
